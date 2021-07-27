@@ -1,28 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Home @onLoggedIn="setUser" />
+    <h1 v-if="user">{{ user.displayName }}</h1>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Home from './pages/Home.vue'
+import { auth } from '@/firebase'
 
 export default {
   name: 'App',
+  created() {
+    auth.onAuthStateChanged(user => {
+      this.setUser(user)
+    })
+  },
+  data() {
+    return {
+      user: null
+    }
+  },
   components: {
-    HelloWorld
-  }
+    Home
+  },
+  methods: {
+    setUser(user) {
+      this.user = user
+    }
+  },
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
