@@ -21,28 +21,40 @@
 
 <script>
 import firebase from "firebase/app"
-import { auth } from '@/firebase'
+import { auth, usersCollection } from '@/firebase'
 
 export default {
   name: 'Home',
+  created() {
+    auth.onAuthStateChanged(user => {
+      this.isLoggedIn = user !== null
+    })
+  },
   data() {
     return {
       isLoggedIn: false,
     }
-  },
+  },  
   methods: {
-    login() {
+    async login() {
       const provider = new firebase.auth.GoogleAuthProvider()
       auth.signInWithPopup(provider).then((result) => {
-        this.$emit('onLoggedIn', result.user)
-        this.isLoggedIn = true
+        const { uid, email } = result.user
+        this.$emit('onLogin', result.user)
+        usersCollection
+          .where('email', '==', email)
+          .get()
+          .then(snapshot => {
+            if (snapshot.empty) {
+              usersCollection.doc(uid).set({email: email})
+            }
+          })
       }).catch(err => console.log(err))
     },
     logout() {
-      auth.signOut().then(() => {
-        this.isLoggedIn = false
-      }).catch(err => console.log(err))
-    }
+      auth.signOut()
+        .catch(err => console.log(err))
+    },
   }
 } 
 </script>

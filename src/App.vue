@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Home @onLoggedIn="setUser" />
-    <h1 v-if="user">{{ user.displayName }}</h1>
+    <Home @onLogin="setUser" />
+    <h1 v-if="user">Hello {{ user.displayName }}</h1>
   </div>
 </template>
 
