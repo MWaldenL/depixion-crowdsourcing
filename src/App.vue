@@ -1,15 +1,18 @@
 <template>
   <div id="app">
     <Home @onLogin="setUser" />
-    <h1 v-if="user">Hello {{ user.displayName }}</h1>
+    <h1 v-if="user">Hello, {{ user.displayName }}</h1>
+    <DataPrivacy v-if="user"/>
     <VisualArtPreliminary v-if="user" />
-    <p>{{user}}</p>
+    <!-- <p>{{user}}</p> -->
   </div>
 </template>
 
 <script>
 import Home from './pages/Home.vue'
 import VisualArtPreliminary from './components/VisualArtPreliminary.vue'
+import DataPrivacy from './components/DataPrivacy.vue'
+
 import { auth, usersCollection } from '@/firebase'
 
 export default {
@@ -26,7 +29,8 @@ export default {
   },
   components: {
     Home,
-    VisualArtPreliminary
+    VisualArtPreliminary,
+    DataPrivacy,
   },
   methods: {
     setUser(user) {
