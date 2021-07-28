@@ -46,7 +46,10 @@ export default {
           .get()
           .then(snapshot => {
             if (snapshot.empty) {
-              usersCollection.doc(uid).set({email: email})
+              usersCollection.doc(uid).set({
+                email: email,
+                preliminary: false
+              })
             }
           })
       }).catch(err => console.log(err))
