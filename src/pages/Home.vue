@@ -1,6 +1,6 @@
 <template>
 <div>
-  <b-navbar toggleable="lg" type="dark" variant="info">
+  <b-navbar class="px-4" fixed="top" toggleable="lg" type="light" variant="light">
     <b-navbar-brand href="#">Hatdog</b-navbar-brand>
     <b-navbar-toggle target="nav-collapse" />
     <b-collapse id="nav-collapse" is-nav>

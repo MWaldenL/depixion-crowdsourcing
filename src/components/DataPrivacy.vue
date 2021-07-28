@@ -1,6 +1,8 @@
 <template>
-  <div class="px-4 py-5 my-5 text-center">
-    <h1 class="display-5 fw-bold mb-4">Data Privacy</h1>
+  <div class="px-4 pt-4">
+    <div class="text-center">
+      <h3 class="display-5 fw-bold mb-4">Data Privacy</h3>
+    </div>
     <div class="col-lg-12 mr-auto">
       <p class="mx-4 text-start">
         In compliance with the Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 

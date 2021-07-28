@@ -1,6 +1,8 @@
 <template>
-  <div class="hello">
-    <h3>Visual Art Preliminary</h3>
+  <div class="px-4">
+    <div class="text-center">
+      <h3 class="display-5 fw-bold mb-4">Visual Art Preliminary</h3>
+    </div>
     <b-form @submit.prevent="onSubmit">
 
       <b-form-group
