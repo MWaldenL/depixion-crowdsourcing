@@ -29,17 +29,26 @@
           v-model="selected"
           :aria-describedby="ariaDescribedBy"
           :options="options"
+          :required="oneSelected"
+          @change="handleSelect"
           plain stacked></b-form-checkbox-group>
 
         <b-form-input
           id="others-input"
           class="mt-2 mb-4"
           v-model="others"
-          placeholder="eg. Museum enthusiast, interior designer"></b-form-input>
+          placeholder="eg. Museum enthusiast, interior designer"
+          :required="othersSelected"
+          @keyup="handleOthers"></b-form-input>
         
       </b-form-group>
       <b-button type="submit" variant="success">Continue</b-button>
     </b-form>
+    <p>
+      {{ selected }} <br>
+      {{ others }} <br>
+      {{ othersSelected }}
+    </p>
   </div>
 </template>
 
@@ -50,6 +59,8 @@ export default {
     return {
       course: "",
       others: "",
+      othersSelected: false,
+      oneSelected: true,
       selected: [],
       options: [
         { text: "Art Appreciation Courses / Hobbies", value: "art appreciation" },
@@ -67,6 +78,33 @@ export default {
         this.selected.push(this.others)
       
       this.$emit("completePrelim", this.course, this.selected)
+    },
+
+    handleSelect () {
+      if (this.selected.includes("other visual arts")) {
+        this.othersSelected = true
+      } else {
+        this.othersSelected = false
+        this.others = ""
+      }
+
+      if (this.selected.length === 0) {
+        this.oneSelected = true
+      } else {
+        this.oneSelected = false
+      }
+    },
+
+    handleOthers () {
+      if (this.others !== "") {
+        if (!this.selected.includes("other visual arts")) {
+          this.selected.push("other visual arts")
+          this.othersSelected = true
+        }
+      } else {
+        this.selected.pop("other visual arts")
+        this.othersSelected = false
+      }
     }
   }
 }
