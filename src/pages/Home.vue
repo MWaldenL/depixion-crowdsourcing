@@ -3,12 +3,18 @@
 
   <img :src="background" id="bg-image">
 
-  <div id="primer" class="ml-auto">
-    <h2><b>DepiXion</b></h2>
-    <h4>Generating Abstract Art Based on a User-Specified Emotion Spectrum</h4>
+  <div id="primer" class="ml-auto" :style="{ backgroundColor: color }">
+    <h2 class="primer-text" :style="{ color: color }">
+      <b>DepiXion</b>
+    </h2>
+
+    <h4 class="primer-text" :style="{ color: color }">
+      Generating Abstract Art Based on a User-Specified Emotion Spectrum
+    </h4>
+    
     <br>
 
-    <p>
+    <p class="primer-text" :style="{ color: color }">
       Hello! <br><br>
 
       We are Keith Gabriel Badulis, Matthew Walden Lua, and Byron Ethelbert Nill, ID 118 Students from the College of Computer Studies taking up BS Computer Science with specializations in Software Technology. We are currently working on our thesis project entitled "Generating Abstract Art Based on a User-Specified Emotion Spectrum". Our goal is to build a software that can create abstract paintings through emotions, and we need your help! <br><br>
@@ -81,8 +87,11 @@ export default {
   },
 
   created() {
+    const colors = ["#895d53", "#99b0ae", "#d1c7bf", "#80495a", "#1f1613"]
     const rand = Math.floor(Math.random() * 5) + 1
+
     this.background = require("../../public/homebg" + rand + ".jpg")
+    this.color = colors[rand - 1]
   },
 }
 </script>
@@ -93,10 +102,13 @@ export default {
 }
 
 #primer {
-  background-color: antiquewhite;
   height: 100vh;
   width: 35vw;
   padding: 30px;
+}
+
+.primer-text {
+  filter: invert(100%);
 }
 
 #login:hover {
