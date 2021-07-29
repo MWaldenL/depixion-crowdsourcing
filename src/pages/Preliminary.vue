@@ -4,6 +4,7 @@
   <VisualArtPreliminary v-if="user" />
 </div>
 </template>
+
 <script>
 import { auth } from '@/firebase'
 import DataPrivacy from '@/components/DataPrivacy'

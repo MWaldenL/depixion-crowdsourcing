@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-navbar class="px-4" toggleable="lg" type="light" variant="light">
+    <!-- <b-navbar class="px-4" toggleable="lg" type="light" variant="light" v-if="!isLoggedIn">
       <b-navbar-brand href="#">Hatdog</b-navbar-brand>
       <b-navbar-toggle target="nav-collapse" />
       <b-collapse id="nav-collapse" is-nav>
@@ -15,7 +15,7 @@
             size="sm" class="my-2 my-sm-0">Logout</b-button>
         </b-navbar-nav>
       </b-collapse>
-    </b-navbar>
+    </b-navbar> -->
     <router-view />
   </div>
 </template>
@@ -23,9 +23,11 @@
 <script>
 import firebase from "firebase/app"
 import { auth, usersCollection } from '@/firebase'
+
 import Home from './pages/Home.vue'
 import VisualArtPreliminary from './components/VisualArtPreliminary.vue'
 import DataPrivacy from './components/DataPrivacy.vue'
+
 export default {
   name: 'App',
   created() {
