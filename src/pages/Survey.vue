@@ -1,12 +1,14 @@
 <template>
-<div id="home">
-
-</div>
+  <div>
+    hatdog
+  </div>
 </template>
 <script>
 export default {
   data() {
-    return {}
-  },
+    return {
+      
+    }
+  }
 }
 </script>
