@@ -10,7 +10,7 @@
             </div>
             <b-row>
               <b-col class="mb-4" lg="6" sm="12">
-                <b-img class="form-img" src="https://picsum.photos/600/400/?image=92" fluid-grow alt="Abstract Painting"/>
+                <b-img class="form-img" :src=imageUrl fluid-grow alt="Abstract Painting"/>
               </b-col>
               <b-col class="my-auto pb-4">
                 <b-container :key="lbl.emotion" v-for="lbl in emotionLabels">
@@ -75,6 +75,7 @@ export default {
       ],
       points: 10, // idk pa
       page: 2, // kailangan ba to? hahahaha
+      imageUrl: 'https://picsum.photos/600/400/?image=92', // ayoko galawin imgUrl mo hahaha
     }
   },
   methods: {
