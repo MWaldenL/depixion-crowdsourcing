@@ -76,18 +76,18 @@ export default {
   data() {
     return {
       background: "",
-      backgroundColor: "white",
-      color: "black"
+      backgroundColor: "",
+      color: ""
     }
   },
 
   created() {
-    // const colors = ["#895d53", "#99b0ae", "#d1c7bf", "#80495a", "#1f1613"]
-    const rand = Math.floor(Math.random() * 5) + 1
-
+    let rand = Math.floor(Math.random() * 5) + 1
     this.background = require("../../public/homebg" + rand + ".jpg")
-    // this.backgroundColor = colors[rand - 1]
-    // this.color = rand === 1 || rand === 4 || rand === 5 ? "#e6e6e6" : "333333"
+
+    rand = Math.floor(Math.random() * 2)
+    this.backgroundColor = rand === 0 ? "#e6e6e6" : "#333333"
+    this.color = rand === 0 ? "#333333" : "#e6e6e6"
   },
 }
 </script>

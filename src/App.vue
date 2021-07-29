@@ -1,34 +1,20 @@
 <template>
-  <div id="app">
-    <b-navbar class="px-4" toggleable="lg" type="light" variant="light" v-if="isLoggedIn">
-      <b-navbar-brand href="#">DepiXion</b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse" />
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav class="d-block ml-auto">
-          <b-button 
-            @click="logout" 
-            size="sm" 
-            class="my-2 my-sm-0">Logout</b-button>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-    <router-view />
-  </div>
+<div id="app">
+  <NavProfile v-if="isLoggedIn" />
+  <router-view />
+</div>
 </template>
 
 <script>
-import firebase from "firebase/app"
-import { auth, usersCollection } from '@/firebase'
-
-import Home from './pages/Home.vue'
-import VisualArtPreliminary from './components/VisualArtPreliminary.vue'
-import DataPrivacy from './components/DataPrivacy.vue'
+import { auth } from '@/firebase'
+import NavProfile from './components/NavProfile.vue'
 
 export default {
   name: 'App',
   created() {
     auth.onAuthStateChanged(user => {
       this.isLoggedIn = user !== null
+      this.setUser(user)
     })
   },
   data() {
@@ -38,32 +24,12 @@ export default {
     }
   },
   components: {
-    Home,
-    VisualArtPreliminary,
-    DataPrivacy,
+    NavProfile
   },
   methods: {
     setUser(user) {
       this.user = user
     },
-    // async login() {
-    //   const provider = new firebase.auth.GoogleAuthProvider()
-    //   auth.signInWithPopup(provider).then((result) => {
-    //     const { uid, email } = result.user
-    //     this.$emit('onLogin', result.user)
-    //     usersCollection
-    //       .where('email', '==', email)
-    //       .get()
-    //       .then(snapshot => {
-    //         if (snapshot.empty) {
-    //           usersCollection.doc(uid).set({
-    //             email: email,
-    //             preliminary: false
-    //           })
-    //         }
-    //       })
-    //   }).catch(err => console.log(err))
-    // },
     logout() {
       this.$router.push("/")
       auth.signOut()

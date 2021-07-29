@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: 'Repeat Form',
+  name: 'RepeatForm',
   data() {
     return {
       points: 0
