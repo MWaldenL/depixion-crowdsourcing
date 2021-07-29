@@ -1,7 +1,12 @@
 <template>
 <b-container id="preliminary">
-  <DataPrivacy v-if="user" />
-  <VisualArtPreliminary v-if="user" @completePrelim="updateDB" />
+  <div v-if="answeredPreliminary">
+    <RepeatForm @moveToSurvey="moveToSurvey" />
+  </div>
+  <div v-else>
+    <DataPrivacy />
+    <VisualArtPreliminary @completePrelim="updateDB" />
+  </div>
 </b-container>
 </template>
 
@@ -9,6 +14,7 @@
 import { auth, usersCollection } from '@/firebase'
 import DataPrivacy from '@/components/DataPrivacy'
 import VisualArtPreliminary from '@/components/VisualArtPreliminary'
+import RepeatForm from '@/components/RepeatForm'
 
 export default {
   created() {
@@ -18,26 +24,42 @@ export default {
   },
   data() {
     return {
-      user: null
+      user: null,
+      answeredPreliminary: false
     }
   },
+
   components: {
     DataPrivacy,
-    VisualArtPreliminary
+    VisualArtPreliminary,
+    RepeatForm
   },
+
   methods: {
     setUser(user) {
       this.user = user
+
+      usersCollection
+        .doc(user.uid)
+        .get()
+        .then(user => {
+          if (!user.empty) {
+            this.answeredPreliminary = user.data().preliminary
+          }
+        })
     },
 
     async updateDB(course, selected) {
-      const user = auth.currentUser.uid;
-      await usersCollection.doc(user).update({
+      await usersCollection.doc(this.user.uid).update({
         preliminary: true,
         course: course,
         visualArts: selected
       })
 
+      this.$router.push("/survey")
+    },
+
+    moveToSurvey() {
       this.$router.push("/survey")
     }
   }

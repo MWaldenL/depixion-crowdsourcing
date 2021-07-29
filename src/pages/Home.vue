@@ -15,7 +15,7 @@
 
       In this survey, you will be shown 10 abstract paintings, and you will tell us the emotions that you feel from them. You will be allowed to answer the survey again if you wish to do so. <br><br>
       
-      For every image that you label, you will earn 1 point. 10 points will give you one raffle ticket for a chance to win Php 250.00 or Php 500.00 through GCash! <br><br>
+      For every image that you label, you will earn 10 points. 100 points will give you one raffle ticket for a chance to win Php 250.00 or Php 500.00 through GCash! <br><br>
 
       For any concerns or questions regarding this questionnaire or our project, in general, you may reach us through our email addresses and contact numbers below: <br><br>
 
@@ -56,7 +56,7 @@ export default {
       const provider = new firebase.auth.GoogleAuthProvider()
       auth.signInWithPopup(provider).then((result) => {
         const { uid, email } = result.user
-        this.$emit('onLogin', result.user)
+        // this.$emit('onLogin', result.user)
         usersCollection
           .where('email', '==', email)
           .get()
