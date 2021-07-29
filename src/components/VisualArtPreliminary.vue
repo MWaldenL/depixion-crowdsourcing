@@ -44,8 +44,6 @@
 </template>
 
 <script>
-import { auth, usersCollection } from '@/firebase'
-
 export default {
   name: 'VisualArtPreliminary',
   data() {
@@ -64,16 +62,11 @@ export default {
     }
   },
   methods: {
-    async onSubmit () {
+    onSubmit () {
       if (this.others !== "")
         this.selected.push(this.others)
-
-      const user = auth.currentUser.uid;
-      usersCollection.doc(user).update({
-        preliminary: true,
-        course: this.course,
-        visualArts: this.selected
-      })
+      
+      this.$emit("completePrelim", this.course, this.selected)
     }
   }
 }
