@@ -4,7 +4,6 @@
     <h1 v-if="user">Hello, {{ user.displayName }}</h1>
     <DataPrivacy v-if="user"/>
     <VisualArtPreliminary v-if="user" />
-    <!-- <p>{{user}}</p> -->
   </div>
 </template>
 

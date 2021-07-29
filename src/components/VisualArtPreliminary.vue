@@ -3,10 +3,11 @@
     <div class="text-center">
       <h3 class="display-5 fw-bold mb-4">Visual Art Preliminary</h3>
     </div>
-    <b-form @submit.prevent="onSubmit">
+    <b-form @submit.prevent="onSubmit" class="mx-4">
 
       <b-form-group
         id="course-input-group"
+        class="my-4"
         label="What is your current profession? If student, please indicate your track (SHS) or degree (College)."
         label-for="course-input">
 
@@ -20,17 +21,19 @@
 
       <b-form-group
         id="course-hobbies-group"
-        label="Please enumerate any credentials or information about your visual arts background. This can be any courses that you took, are taking, or ar teaching or even as simple as being an enthusiast of visual art"
+        label="Please enumerate any credentials or information about your visual arts background. This can be any courses that you took, are taking, or are teaching or even as simple as being an enthusiast of visual art"
         v-slot="{ ariaDescribedBy }">
 
         <b-form-checkbox-group
           id="course-hobbies-checkboxes"
           v-model="selected"
           :aria-describedby="ariaDescribedBy"
-          :options="options"></b-form-checkbox-group>
+          :options="options"
+          plain stacked></b-form-checkbox-group>
 
         <b-form-input
           id="others-input"
+          class="mt-2 mb-5"
           v-model="others"
           placeholder="eg. Museum enthusiast, interior designer"></b-form-input>
         
