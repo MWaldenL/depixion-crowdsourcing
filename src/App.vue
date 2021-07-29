@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import firebase from "firebase/app"
+import { auth, usersCollection } from '@/firebase'
 import Home from './pages/Home.vue'
 import VisualArtPreliminary from './components/VisualArtPreliminary.vue'
 import DataPrivacy from './components/DataPrivacy.vue'
