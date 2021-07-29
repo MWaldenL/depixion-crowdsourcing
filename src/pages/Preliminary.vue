@@ -1,12 +1,14 @@
 <template>
-<b-container id="preliminary">
-  <div v-if="answeredPreliminary">
-    <RepeatForm @moveToSurvey="moveToSurvey" />
-  </div>
-  <div v-else>
-    <DataPrivacy />
-    <VisualArtPreliminary @completePrelim="updateDB" />
-  </div>
+<b-container v-if="answeredPreliminary === -1"></b-container>
+<b-container v-else-if="answeredPreliminary === 1">
+  <RepeatForm @moveToSurvey="moveToSurvey" />
+</b-container>
+<b-container v-else>
+  <b-row>
+    <DataPrivacy class="col-xl" />
+    <div class="col-xl-1"></div>
+    <VisualArtPreliminary class="col-xl" @completePrelim="updateDB" />
+  </b-row>
 </b-container>
 </template>
 
@@ -25,7 +27,7 @@ export default {
   data() {
     return {
       user: null,
-      answeredPreliminary: false
+      answeredPreliminary: -1
     }
   },
 
@@ -44,7 +46,7 @@ export default {
         .get()
         .then(user => {
           if (!user.empty) {
-            this.answeredPreliminary = user.data().preliminary
+            this.answeredPreliminary = user.data().preliminary ? 1 : 0
           }
         })
     },

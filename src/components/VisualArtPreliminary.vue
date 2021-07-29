@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 pt-4">
     <div class="text-center">
       <h3 class="display-5 fw-bold mb-4">Visual Art Preliminary</h3>
     </div>
@@ -33,7 +33,7 @@
 
         <b-form-input
           id="others-input"
-          class="mt-2 mb-5"
+          class="mt-2 mb-4"
           v-model="others"
           placeholder="eg. Museum enthusiast, interior designer"></b-form-input>
         
@@ -71,21 +71,3 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

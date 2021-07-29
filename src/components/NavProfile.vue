@@ -1,5 +1,5 @@
 <template>
-<div class="p-3 bg-dark d-flex justify-content-between align-content-end">
+<div class="p-3 d-flex justify-content-between align-content-end" id="nav">
   <h2 class="text-white">
     <b>DepiXion</b><br>
     <sub>
@@ -81,3 +81,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+#nav {
+  background-color: #333333;
+}
+</style>

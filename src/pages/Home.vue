@@ -1,9 +1,9 @@
 <template>
-<div id="home" class="d-flex">
+<div id="home" class="d-flex row">
 
-  <img :src="background" id="bg-image">
+  <img :src="background" id="bg-image" class="col-xl-8 px-0">
 
-  <div id="primer" class="ml-auto" :style="{ backgroundColor: backgroundColor }">
+  <div id="primer" class="ml-auto col-xl p-5" :style="{ backgroundColor: backgroundColor }">
     <h2 :style="{ color: color }"><b>DepiXion</b></h2>
     <h4 :style="{ color: color }">Generating Abstract Art Based on a User-Specified Emotion Spectrum</h4>
     <br>
@@ -17,7 +17,7 @@
       
       For every image that you label, you will earn 10 points. 100 points will give you one raffle ticket for a chance to win Php 250.00 or Php 500.00 through GCash! <br><br>
 
-      For any concerns or questions regarding this questionnaire or our project, in general, you may reach us through our email addresses and contact numbers below: <br><br>
+      For any concerns or questions regarding this website or our project, in general, you may reach us through our email addresses and contact numbers below: <br><br>
 
       <b>Keith Gabriel Badulis</b><br>
       keith_gabriel_badulis@dlsu.edu.ph<br>
@@ -34,11 +34,7 @@
       Thank you very much for your interest in our study! Please click the link below to login with your Google Account and proceed with the survey.
     </p>
 
-    <img 
-      id="login" 
-      class="d-block mx-auto mt-5 w-50" 
-      src="@/../public/login.png" 
-      @click="login">
+    <b-button class="d-block mx-auto mt-5 w-50" :variant="btnColor" size="lg" @click="login">Login with Google</b-button>
   </div>
 
 </div>
@@ -77,7 +73,8 @@ export default {
     return {
       background: "",
       backgroundColor: "",
-      color: ""
+      color: "",
+      btnColor: ""
     }
   },
 
@@ -88,6 +85,7 @@ export default {
     rand = Math.floor(Math.random() * 2)
     this.backgroundColor = rand === 0 ? "#e6e6e6" : "#333333"
     this.color = rand === 0 ? "#333333" : "#e6e6e6"
+    this.btnColor = rand === 0 ? "dark" : "light"
   },
 }
 </script>
@@ -95,15 +93,5 @@ export default {
 <style scoped>
 #home {
   height: 100vh;
-}
-
-#primer {
-  height: 100vh;
-  width: 35vw;
-  padding: 30px;
-}
-
-#login:hover {
-  cursor: pointer;
 }
 </style>
