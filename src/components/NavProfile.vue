@@ -61,9 +61,14 @@ export default {
 
   methods: {
     logout() {
-      this.$router.push("/")
-      auth.signOut()
-        .catch(err => console.log(err))
+      auth
+        .signOut()
+        .then(() => {
+          this.$router.push("/")
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
   }
 };
