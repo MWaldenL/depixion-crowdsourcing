@@ -22,7 +22,7 @@
                   <font-awesome-icon  :icon="['fas','spinner']" />
                 </div>
               </b-col>
-              <b-col class="my-auto pb-4">
+              <b-col class="my-auto">
                 <b-container :key="lbl.emotion" v-for="lbl in emotionLabels">
                   <b-row>
                     <b-col cols="3">
@@ -42,17 +42,21 @@
                     </b-col>
                   </b-row>
                 </b-container>
+                <b-container class="d-flex justify-content-center my-3">
+                  <b-button 
+                    type="submit"
+                    class="button-submit"
+                    :class="isDisabled"
+                    @click="nextPage">Next</b-button>
+                </b-container>
               </b-col>
             </b-row>
           </b-container>
           
           <div class="container d-flex justify-content-between align-items-end">
-            <span>Painting {{ page }}/10</span>
-            <b-button 
-              type="submit" 
-              class="ml-auto" 
-              :class="isDisabled" 
-              @click="nextPage">Next</b-button>
+            <div class="col mr-4">
+              <b-progress :value="page" :max="10" show-value class="mr-3"></b-progress>
+            </div>
           </div>
         </b-card>
       </form>
@@ -201,6 +205,10 @@ export default {
   justify-content: center;
   align-items: center;
   height: 60vh;
+}
+
+.button-submit {
+  width: 60%;
 }
 
 @keyframes spinner {
