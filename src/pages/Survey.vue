@@ -1,7 +1,6 @@
 <template>
   <div class="px-4 pt-4">
     <div v-if="completed">Thank you</div>
-
     <div v-else class="col-lg-10 mx-auto">
       <form @submit="onSubmit">
         <b-card class="p-2">
@@ -12,16 +11,16 @@
             </div>
             <b-row>
               <b-col class="mb-4" lg="6" sm="12">
-                <div class="img-wrapper">
-                  <b-img 
-                    v-show="isLoaded"
-                    @load="onLoaded"
-                    class="form-img" 
-                    :src="imgSrc" 
-                    fluid-grow 
-                    alt="Abstract Painting" />
+                <b-img 
+                  v-show="isLoaded"
+                  @load="onLoaded"
+                  class="form-img" 
+                  :src="imgSrc" 
+                  fluid-grow 
+                  alt="Abstract Painting" />
+                <div class="loading-wrapper" v-show="!isLoaded"> 
+                  <font-awesome-icon  :icon="['fas','spinner']" />
                 </div>
-                <font-awesome-icon v-show="!isLoaded" :icon="['fas','spinner']" />
               </b-col>
               <b-col class="my-auto pb-4">
                 <b-container :key="lbl.emotion" v-for="lbl in emotionLabels">
@@ -193,10 +192,15 @@ export default {
 <style scoped>
 .form-img {
   border-radius: 8px;
+  object-fit: contain;
+  height: 60vh;
 }
 
-.img-wrapper {
-
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
 }
 
 @keyframes spinner {
