@@ -7,19 +7,21 @@
         <b-card class="p-2">
           <b-container> 
             <div class="mb-4 d-flex justify-content-between align-items-center">
-              <h3 class="fw-bold">How would you feel?</h3>
+              <h3 class="fw-bold">How does this painting make you feel?</h3>
               <span>You have {{points}} points</span>
             </div>
             <b-row>
               <b-col class="mb-4" lg="6" sm="12">
-                <b-img 
-                  v-show="loaded"
-                  @load="onLoaded"
-                  class="form-img" 
-                  :src="imageList[page-1].url" 
-                  fluid-grow 
-                  alt="Abstract Painting" />
-                <p v-show="!loaded">hatdog</p>
+                <div class="img-wrapper">
+                  <b-img 
+                    v-show="isLoaded"
+                    @load="onLoaded"
+                    class="form-img" 
+                    :src="imgSrc" 
+                    fluid-grow 
+                    alt="Abstract Painting" />
+                </div>
+                <font-awesome-icon v-show="!isLoaded" :icon="['fas','spinner']" />
               </b-col>
               <b-col class="my-auto pb-4">
                 <b-container :key="lbl.emotion" v-for="lbl in emotionLabels">
@@ -64,17 +66,19 @@ import "firebase/storage";
 import { auth, usersCollection, paintingsCollection } from '@/firebase'
 export default {
   created() {
-    this.storageRef = firebase.storage().ref();
-    this.fetchImages();
     auth.onAuthStateChanged(user => {
       this.user = user.uid
+      this.markAnnotatedImages()
     })
+    this.storageRef = firebase.storage().ref();
+    this.fetchImages();
   },
   data() {
     return {
       user: null,
       loaded: false,
       storageRef: null,
+      annotated: Array(2000).fill(false),
       imageList: [],
       emotionLabels: [
         {emotion: "Joy", value: null},
@@ -94,6 +98,12 @@ export default {
     completed() {
       return this.page == 10
     },
+    imgSrc() {
+      return this.imageList[this.page-1] ? this.imageList[this.page-1].url : ''
+    },
+    isLoaded() {
+      return this.imageList[this.page-1] && this.loaded
+    },
     isDisabled() {
       return {
         disabled: !this.loaded  
@@ -103,20 +113,28 @@ export default {
   methods: {
     onSubmit(e) {
       e.preventDefault()
-      // console.log(this.emotionLabels)
     },
     onLoaded() {
       this.loaded = true
     },
+    async markAnnotatedImages() {
+      const userDoc = await usersCollection.doc(this.user).get()
+      const annotated = userDoc.data().paintingsAnnotated;  
+      for (let img of annotated) {
+        const index = this.annotated.indexOf(img)
+        if (index >= 0) {
+          this.annotated[index] = true;
+        }
+      }
+    },
     async fetchImages() {
-      const list = await this.storageRef.child("images").listAll()
-      const visited = Array(2000).fill(false)
+      const list = await this.storageRef.child('images').listAll()
       for (let i=0; i < 10; i++) {
         let rand;
         do {
           rand = Math.floor(Math.random()*list.items.length)
-        } while (visited[rand])
-        visited[rand] = true
+        } while (this.annotated[rand])
+        this.annotated[rand] = true
         const imgPath = list.items[rand].fullPath
         const img = imgPath.split('/')[1]
         const url = await this.storageRef.child(imgPath).getDownloadURL()
@@ -124,10 +142,11 @@ export default {
       }
     },
     async nextPage() {
-      // save image to firebase
+      // Save image to firebase
       const currentImage = this.imageList[this.page-1].img
       this.writeImageToDb(currentImage)
       this.writeImageToUser(currentImage)
+      // Next page
       if (this.loaded) {
         this.page++
       }
@@ -174,5 +193,16 @@ export default {
 <style scoped>
 .form-img {
   border-radius: 8px;
+}
+
+.img-wrapper {
+
+}
+
+@keyframes spinner {
+  to { transform: rotate(360deg); }
+}
+.fa-spinner {
+  animation: spinner 1s linear infinite;
 }
 </style>
