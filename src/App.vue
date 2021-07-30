@@ -1,28 +1,41 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<div id="app">
+  <NavProfile v-if="isLoggedIn" />
+  <router-view />
+</div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { auth } from '@/firebase'
+import NavProfile from './components/NavProfile.vue'
 
 export default {
   name: 'App',
+  created() {
+    auth.onAuthStateChanged(user => {
+      this.isLoggedIn = user !== null
+      this.setUser(user)
+    })
+  },
+  data() {
+    return {
+      user: null,
+      isLoggedIn: false
+    }
+  },
   components: {
-    HelloWorld
+    NavProfile
+  },
+  methods: {
+    setUser(user) {
+      this.user = user
+    },
+    logout() {
+      this.$router.push("/")
+      auth.signOut()
+        .catch(err => console.log(err))
+    },
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
