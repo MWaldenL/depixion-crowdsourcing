@@ -1,15 +1,12 @@
 <template>
 <div class="p-3 d-flex justify-content-between align-content-end" id="nav">
   <h2 class="text-white">
-    <b>DepiXion</b><br>
-    <sub>
-      Hello, {{ name }}
-    </sub>
+    <b>DepiXion</b>
   </h2>
-  <div class="d-inline-block">
-    <b-button v-b-modal.dp-modal variant="success" class="w-100 mb-2">View Data Privacy</b-button>
-    <b-button @click="logout" variant="danger" class="w-100">Logout</b-button>
-  </div>
+  <b-button-toolbar>
+    <b-button v-b-modal.dp-modal variant="success" class="mx-1">View Data Privacy</b-button>
+    <b-button @click="logout" variant="danger" class="mx-1">Logout</b-button>
+  </b-button-toolbar>
   <b-modal id="dp-modal" size="xl" title="Data Privacy" centered hide-header-close ok-only>
     <p class="mx-4 text-start">
         In compliance with the Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
@@ -68,16 +65,6 @@ export default {
       auth.signOut()
         .catch(err => console.log(err))
     },
-  },
-
-  data() {
-    return {
-      name: ""
-    }
-  },
-
-  created() {
-    this.name = auth.currentUser.displayName
   }
 };
 </script>

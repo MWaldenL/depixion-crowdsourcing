@@ -4,7 +4,6 @@
       <h3 class="display-5 fw-bold mb-4">Visual Art Preliminary</h3>
     </div>
     <b-form @submit.prevent="onSubmit" class="mx-4">
-
       <b-form-group
         id="course-input-group"
         class="my-4"
@@ -42,13 +41,8 @@
           @keyup="handleOthers"></b-form-input>
         
       </b-form-group>
-      <b-button type="submit" variant="success">Continue</b-button>
+      <b-button type="submit" variant="success" class="v-100">Continue</b-button>
     </b-form>
-    <p>
-      {{ selected }} <br>
-      {{ others }} <br>
-      {{ othersSelected }}
-    </p>
   </div>
 </template>
 

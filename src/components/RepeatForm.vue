@@ -2,8 +2,15 @@
 <div class="px-4">
   <div class="text-center">
 
+    <h5>
+      Hello, {{ name }}
+    </h5>
+
     <h5>You currently have</h5>
-    <h3 class="display-5 fw-bold mb-4">{{ points }} points</h3>
+    <h3 class="display-5 fw-bold mb-4">
+      {{ points }} points 
+      <span v-if="points === 0">:'(</span> 
+    </h3>
 
     <h5>Remember!</h5>
     <p>
@@ -18,17 +25,34 @@
 </template>
 
 <script>
+import { auth, usersCollection } from '@/firebase'
+
 export default {
   name: 'RepeatForm',
+
   data() {
     return {
-      points: 0
+      points: 0,
+      name: ""
     }
   },
+
   methods: {
     onClick () {
       this.$emit("moveToSurvey")
     }
+  },
+  
+  created() {
+    const user = auth.currentUser
+    this.name = user.displayName
+
+    usersCollection
+      .doc(user.uid)
+      .get()
+      .then(user => {
+        this.points = user.data().points
+      })
   }
 }
 </script>

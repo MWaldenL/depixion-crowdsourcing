@@ -1,5 +1,5 @@
 <template>
-<div id="home" class="d-flex row">
+<div id="home" class="d-flex row gx-0">
 
   <img :src="background" id="bg-image" class="col-xl-8 px-0">
 
@@ -34,7 +34,8 @@
       Thank you very much for your interest in our study! Please click the link below to login with your Google Account and proceed with the survey.
     </p>
 
-    <b-button class="d-block mx-auto mt-5 w-50" :variant="btnColor" size="lg" @click="login">Login with Google</b-button>
+    <!-- <b-button class="d-block mx-auto mt-5 w-50" :variant="btnColor" size="lg" @click="login">Login with Google</b-button> -->
+    <img src="@/../public/login.png" @click="login" id="login" class="d-block mx-auto mt-5 w-50">
   </div>
 
 </div>
@@ -93,5 +94,9 @@ export default {
 <style scoped>
 #home {
   height: 100vh;
+}
+
+#login:hover {
+  cursor: pointer;
 }
 </style>
