@@ -1,12 +1,16 @@
 <template>
-  <div class="px-4 pt-4">
-    <div class="text-center">
-      <h3 class="display-5 fw-bold mb-4">Data Privacy</h3>
-    </div>
-    <div>
-      <p class="mx-4 text-start">
+<div class="p-3 d-flex justify-content-between align-content-end" id="nav">
+  <h2 class="text-white">
+    <b>DepiXion</b>
+  </h2>
+  <b-button-toolbar>
+    <b-button v-b-modal.dp-modal variant="success" class="mx-1">View Data Privacy</b-button>
+    <b-button @click="logout" variant="danger" class="mx-1">Logout</b-button>
+  </b-button-toolbar>
+  <b-modal id="dp-modal" size="xl" title="Data Privacy" centered hide-header-close ok-only>
+    <p class="mx-4 text-start">
         In compliance with the Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
-        (IRR) effective since September 9, 2016, I, {{ name }}, am hereby giving consent to the proponents of this 
+        (IRR) effective since September 9, 2016, I am hereby giving consent to the proponents of this 
         research to do the following:
         <ol class="my-4">
           <li>
@@ -45,23 +49,28 @@
         that improper use of the information (online, offline, or printed) will be subjected to appropriate 
         actions under the Data Privacy Act of 2012 and the institution’s Student Handbook.
       </p>
-    </div>
-  </div>
+  </b-modal>
+</div>
 </template>
 
 <script>
 import { auth } from '@/firebase'
 
 export default {
-  name: "DataPrivacy",
-  data() {
-    return {
-      name: ""
-    }
-  },
-  created() {
-    const user = auth.currentUser
-    this.name = auth.currentUser.displayName
+  name: "NavProfile",
+
+  methods: {
+    logout() {
+      this.$router.push("/")
+      auth.signOut()
+        .catch(err => console.log(err))
+    },
   }
 };
 </script>
+
+<style scoped>
+#nav {
+  background-color: #333333;
+}
+</style>

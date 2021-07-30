@@ -1,10 +1,9 @@
 <template>
-  <div class="px-4">
+  <div class="px-4 pt-4">
     <div class="text-center">
       <h3 class="display-5 fw-bold mb-4">Visual Art Preliminary</h3>
     </div>
     <b-form @submit.prevent="onSubmit" class="mx-4">
-
       <b-form-group
         id="course-input-group"
         class="my-4"
@@ -29,29 +28,33 @@
           v-model="selected"
           :aria-describedby="ariaDescribedBy"
           :options="options"
+          :required="oneSelected"
+          @change="handleSelect"
           plain stacked></b-form-checkbox-group>
 
         <b-form-input
           id="others-input"
-          class="mt-2 mb-5"
+          class="mt-2 mb-4"
           v-model="others"
-          placeholder="eg. Museum enthusiast, interior designer"></b-form-input>
+          placeholder="eg. Museum enthusiast, interior designer"
+          :required="othersSelected"
+          @keyup="handleOthers"></b-form-input>
         
       </b-form-group>
-      <b-button type="submit" variant="success">Continue</b-button>
+      <b-button type="submit" variant="success" class="v-100">Continue</b-button>
     </b-form>
   </div>
 </template>
 
 <script>
-import { auth, usersCollection } from '@/firebase'
-
 export default {
   name: 'VisualArtPreliminary',
   data() {
     return {
       course: "",
       others: "",
+      othersSelected: false,
+      oneSelected: true,
       selected: [],
       options: [
         { text: "Art Appreciation Courses / Hobbies", value: "art appreciation" },
@@ -64,35 +67,39 @@ export default {
     }
   },
   methods: {
-    async onSubmit () {
+    onSubmit () {
       if (this.others !== "")
         this.selected.push(this.others)
+      
+      this.$emit("completePrelim", this.course, this.selected)
+    },
 
-      const user = auth.currentUser.uid;
-      usersCollection.doc(user).update({
-        preliminary: true,
-        course: this.course,
-        visualArts: this.selected
-      })
+    handleSelect () {
+      if (this.selected.includes("other visual arts")) {
+        this.othersSelected = true
+      } else {
+        this.othersSelected = false
+        this.others = ""
+      }
+
+      if (this.selected.length === 0) {
+        this.oneSelected = true
+      } else {
+        this.oneSelected = false
+      }
+    },
+
+    handleOthers () {
+      if (this.others !== "") {
+        if (!this.selected.includes("other visual arts")) {
+          this.selected.push("other visual arts")
+          this.othersSelected = true
+        }
+      } else {
+        this.selected.pop("other visual arts")
+        this.othersSelected = false
+      }
     }
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
