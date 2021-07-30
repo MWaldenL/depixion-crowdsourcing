@@ -61,7 +61,8 @@ export default {
             if (snapshot.empty) {
               usersCollection.doc(uid).set({
                 email: email,
-                preliminary: false
+                preliminary: false,
+                points: 0
               })
             }
             this.$router.push("/prelim")
