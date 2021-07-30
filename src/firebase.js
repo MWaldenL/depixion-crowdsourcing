@@ -14,9 +14,11 @@ firebase.initializeApp({
 const db = firebase.firestore()
 const auth = firebase.auth()
 const usersCollection = db.collection('users')
+const paintingsCollection = db.collection('paintings')
 
 export { 
   db, 
   auth, 
-  usersCollection 
+  usersCollection,
+  paintingsCollection
 } 
