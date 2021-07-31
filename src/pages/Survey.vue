@@ -2,7 +2,7 @@
   <div class="px-4 pt-4">
     <div v-if="completed">Thank you</div>
     <div v-else class="col-lg-10 mx-auto">
-      <form @submit="onSubmit">
+      <form>
         <b-card class="p-2">
           <b-container> 
             <div class="mb-4 d-flex justify-content-between align-items-center">
@@ -18,8 +18,9 @@
                   :src="imgSrc" 
                   fluid-grow 
                   alt="Abstract Painting" />
-                <div class="loading-wrapper" v-show="!isLoaded"> 
-                  <font-awesome-icon  :icon="['fas','spinner']" />
+                <div class="loading-wrapper flex-column" v-show="!isLoaded"> 
+                  <font-awesome-icon class="mb-2" :icon="['fas','spinner']" />
+                  <span class="text-muted">Loading all images...</span>
                 </div>
               </b-col>
               <b-col class="my-auto">
@@ -29,7 +30,7 @@
                       <label>{{ lbl.emotion }}</label>
                     </b-col>
                     <b-col cols="8">
-                      <b-form-rating
+                      <b-form-rating  
                         stars="3"
                         v-model="lbl.value"
                         icon-empty="circle"
@@ -45,7 +46,6 @@
                 </b-container>
                 <b-container class="d-flex justify-content-center my-3">
                   <b-button 
-                    type="submit"
                     class="button-submit"
                     :class="isDisabled"
                     @click="nextPage">Next</b-button>
@@ -115,6 +115,9 @@ export default {
     },
   },
   methods: {
+    onSubmit(e) {
+      e.preventDefault()
+    },
     onLoaded() {
       this.loaded = true
     },
@@ -152,6 +155,8 @@ export default {
         this.page++
       }
       this.loaded = false
+      // Reset ratings form
+      this.emotionLabels.map(_ => _.value = null)
     },
     async writeImageToDb(img) {
       const docRef = paintingsCollection.doc(img)
