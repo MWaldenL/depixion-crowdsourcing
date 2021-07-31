@@ -2,65 +2,63 @@
   <div class="px-4 pt-4">
     <div v-if="completed">Thank you</div>
     <div v-else class="col-lg-10 mx-auto">
-      <form>
-        <b-card class="p-2">
-          <b-container> 
-            <div class="mb-4 d-flex justify-content-between align-items-center">
-              <h3 class="fw-bold">How does this painting make you feel?</h3>
-              <span>You have {{points}} points</span>
-            </div>
-            <b-row>
-              <b-col class="mb-4" lg="6" sm="12">
-                <b-img 
-                  v-show="isLoaded"
-                  @load="onLoaded"
-                  class="form-img" 
-                  :src="imgSrc" 
-                  fluid-grow 
-                  alt="Abstract Painting" />
-                <div class="loading-wrapper flex-column" v-show="!isLoaded"> 
-                  <font-awesome-icon class="mb-2" :icon="['fas','spinner']" />
-                  <span class="text-muted">Loading all images...</span>
-                </div>
-              </b-col>
-              <b-col class="my-auto">
-                <b-container :key="lbl.emotion" v-for="lbl in emotionLabels">
-                  <b-row>
-                    <b-col cols="3">
-                      <label>{{ lbl.emotion }}</label>
-                    </b-col>
-                    <b-col cols="8">
-                      <b-form-rating  
-                        stars="3"
-                        v-model="lbl.value"
-                        icon-empty="circle"
-                        icon-full="circle-fill"
-                        color="green"
-                        no-border
-                        show-clear/>
-                    </b-col>
-                    <b-col cols="1">
-                      {{lbl.value ? lbl.value : 0}}
-                    </b-col>
-                  </b-row>
-                </b-container>
-                <b-container class="d-flex justify-content-center my-3">
-                  <b-button 
-                    class="button-submit"
-                    :class="isDisabled"
-                    @click="nextPage">Next</b-button>
-                </b-container>
-              </b-col>
-            </b-row>
-          </b-container>
-          
-          <div class="container d-flex justify-content-between align-items-end">
-            <div class="col mr-4">
-              <b-progress :value="page" :max="10" show-value class="mr-3"></b-progress>
-            </div>
+      <b-card class="p-2">
+        <b-container> 
+          <div class="mb-4 d-flex justify-content-between align-items-center">
+            <h3 class="fw-bold">How does this painting make you feel?</h3>
+            <span>You have {{points}} points</span>
           </div>
-        </b-card>
-      </form>
+          <b-row>
+            <b-col class="mb-4 d-flex" lg="6" sm="12">
+              <b-img 
+                v-show="isLoaded"
+                @load="onLoaded"
+                class="form-img mx-auto" 
+                :src="imgSrc" 
+                fluid 
+                alt="Abstract Painting" />
+              <div class="loading-wrapper mx-auto flex-column" v-show="!isLoaded"> 
+                <font-awesome-icon class="mb-2" :icon="['fas','spinner']" />
+                <span class="text-muted">Loading all images...</span>
+              </div>
+            </b-col>
+            <b-col class="my-auto">
+              <b-container :key="lbl.emotion" v-for="lbl in emotionLabels">
+                <b-row>
+                  <b-col cols="3">
+                    <label>{{ lbl.emotion }}</label>
+                  </b-col>
+                  <b-col cols="8">
+                    <b-form-rating  
+                      stars="3"
+                      v-model="lbl.value"
+                      icon-empty="circle"
+                      icon-full="circle-fill"
+                      color="green"
+                      no-border
+                      show-clear/>
+                  </b-col>
+                  <b-col cols="1">
+                    {{lbl.value ? lbl.value : 0}}
+                  </b-col>
+                </b-row>
+              </b-container>
+              <b-container class="d-flex justify-content-center my-4">
+                <b-button 
+                  class="button-submit"
+                  :class="isDisabled"
+                  @click="nextPage">Next</b-button>
+              </b-container>
+            </b-col>
+          </b-row>
+        </b-container>
+        
+        <div class="container d-flex justify-content-between align-items-end">
+          <div class="col mr-4">
+            <b-progress :value="page" :max="10" show-value class="mr-3"></b-progress>
+          </div>
+        </div>
+      </b-card>
     </div>
   </div>
 </template>
@@ -199,7 +197,7 @@ export default {
 <style scoped>
 .form-img {
   border-radius: 8px;
-  object-fit: contain;
+  /* object-fit: contain; */
   height: 60vh;
 }
 
@@ -211,7 +209,7 @@ export default {
 }
 
 .button-submit {
-  width: 60%;
+  width: 50%;
 }
 
 @keyframes spinner {
