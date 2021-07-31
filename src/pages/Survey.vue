@@ -30,6 +30,7 @@
                     </b-col>
                     <b-col cols="8">
                       <b-form-rating
+                        stars="3"
                         v-model="lbl.value"
                         icon-empty="circle"
                         icon-full="circle-fill"
@@ -114,9 +115,6 @@ export default {
     },
   },
   methods: {
-    onSubmit(e) {
-      e.preventDefault()
-    },
     onLoaded() {
       this.loaded = true
     },
