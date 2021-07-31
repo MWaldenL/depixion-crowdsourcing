@@ -6,7 +6,8 @@
         <b-container> 
           <div class="mb-4 d-flex justify-content-between align-items-center">
             <h3 class="fw-bold">How does this painting make you feel?</h3>
-            <span>You have {{points}} points</span>
+            <span v-if="points">You currently have {{points}} points</span>
+            <span v-else class="text-muted">Getting your points...</span>
           </div>
           <b-row>
             <b-col class="mb-4 d-flex" lg="6" sm="12">
@@ -71,9 +72,10 @@ export default {
     auth.onAuthStateChanged(user => {
       this.user = user.uid
       this.markAnnotatedImages()
+      this.getPoints()
     })
-    this.storageRef = firebase.storage().ref();
-    this.fetchImages();
+    this.storageRef = firebase.storage().ref()
+    this.fetchImages()
   },
   data() {
     return {
@@ -92,7 +94,7 @@ export default {
         {emotion: "Anger", value: null},
         {emotion: "Anticipation", value: null},
       ],
-      points: 10, // temp
+      points: null,
       page: 1,
     }
   },
@@ -156,6 +158,10 @@ export default {
       // Reset ratings form
       this.emotionLabels.map(_ => _.value = null)
     },
+    async getPoints() {
+      const userRef = usersCollection.doc(this.user)
+      await userRef.get().then(user => this.points = user.data().points)
+    },
     async writeImageToDb(img) {
       const docRef = paintingsCollection.doc(img)
       const doc = await docRef.get()
@@ -186,9 +192,12 @@ export default {
     },
     async writeImageToUser(img) {
       const userRef = usersCollection.doc(this.user)
+      const userPts = (await userRef.get()).data().points
       await userRef.update({
-        paintingsAnnotated: firebase.firestore.FieldValue.arrayUnion(img)
+        paintingsAnnotated: firebase.firestore.FieldValue.arrayUnion(img),
+        points: userPts + 10
       })
+      this.points = userPts + 10
     }
   }
 }
