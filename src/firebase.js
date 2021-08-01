@@ -11,6 +11,15 @@ firebase.initializeApp({
   appId: "1:810480073996:web:f88c3a83c905f535b35d29"
 })
 
+firebase.getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+      const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+          unsubscribe();
+          resolve(user);
+      }, reject);
+  })
+};
+
 const db = firebase.firestore()
 const auth = firebase.auth()
 const usersCollection = db.collection('users')
