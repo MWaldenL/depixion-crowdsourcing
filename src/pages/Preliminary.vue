@@ -1,9 +1,9 @@
 <template>
-<b-container v-if="answeredPreliminary === -1"></b-container>
-<b-container v-else-if="answeredPreliminary === 1">
+<b-container v-if="answeredPreliminary === -1" class="main-div"></b-container>
+<b-container v-else-if="answeredPreliminary === 1" class="main-div">
   <RepeatForm @moveToSurvey="moveToSurvey" />
 </b-container>
-<b-container v-else>
+<b-container v-else class="main-div">
   <b-row>
     <DataPrivacy class="col-xl" />
     <div class="col-xl-1"></div>

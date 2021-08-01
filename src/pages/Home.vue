@@ -1,5 +1,5 @@
 <template>
-<div id="home" class="d-flex row gx-0">
+<div id="home" class="d-flex row gx-0 main-div">
 
   <img :src="background" id="bg-image" class="col-xl-8 px-0">
 
@@ -34,7 +34,6 @@
       Thank you very much for your interest in our study! Please click the link below to login with your Google Account and proceed with the survey.
     </p>
 
-    <!-- <b-button class="d-block mx-auto mt-5 w-50" :variant="btnColor" size="lg" @click="login">Login with Google</b-button> -->
     <img src="@/../public/login.png" @click="login" id="login" class="d-block mx-auto mt-5 w-50">
   </div>
 
@@ -75,8 +74,7 @@ export default {
     return {
       background: "",
       backgroundColor: "",
-      color: "",
-      btnColor: ""
+      color: ""
     }
   },
 
@@ -87,7 +85,6 @@ export default {
     rand = Math.floor(Math.random() * 2)
     this.backgroundColor = rand === 0 ? "#e6e6e6" : "#333333"
     this.color = rand === 0 ? "#333333" : "#e6e6e6"
-    this.btnColor = rand === 0 ? "dark" : "light"
   },
 }
 </script>

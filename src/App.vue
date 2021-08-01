@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div id="app" class="main-div">
   <NavProfile v-if="isLoggedIn" />
   <router-view />
 </div>
@@ -39,3 +39,13 @@ export default {
 }
 </script>
 
+<style>
+#app {
+  height: 100vh;
+}
+
+.main-div {
+  background-color: #e6e6e6;
+  color: #333333;
+}
+</style>
