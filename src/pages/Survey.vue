@@ -48,7 +48,14 @@
                 <b-button 
                   class="button-submit"
                   :class="isDisabled"
-                  @click="nextPage">Next</b-button>
+                  @click="nextPage">
+                  <span v-if="this.page < 10">
+                    Next
+                  </span>
+                  <span v-else>
+                    Finish
+                  </span>
+                </b-button>
               </b-container>
             </b-col>
           </b-row>
@@ -72,10 +79,10 @@ export default {
     auth.onAuthStateChanged(user => {
       this.user = user.uid
       this.markAnnotatedImages()
-      this.getPoints()
+      this.fetchFormInfo()
+      this.fetchImages()
     })
     this.storageRef = firebase.storage().ref()
-    this.fetchImages()
   },
   data() {
     return {
@@ -95,12 +102,12 @@ export default {
         {emotion: "Anticipation", value: null},
       ],
       points: null,
-      page: 1,
+      page: null,
     }
   },
   computed: {
     completed() {
-      return this.page == 10
+      return this.page == 11
     },
     imgSrc() {
       return this.imageList[this.page-1] ? this.imageList[this.page-1].url : ''
@@ -120,6 +127,13 @@ export default {
     },
     onLoaded() {
       this.loaded = true
+    },
+    async fetchFormInfo() {
+      const userRef = usersCollection.doc(this.user)
+      // display current points
+      await userRef.get().then(user => this.points = user.data().points)
+      // get last saved page
+      this.page = this.points / 10 % 10 + 1
     },
     async markAnnotatedImages() {
       const userDoc = await usersCollection.doc(this.user).get()
@@ -148,35 +162,28 @@ export default {
     async nextPage() {
       // Save image to firebase
       const currentImage = this.imageList[this.page-1].img
-      this.saveResponse(currentImage, this.emotionLabels)
       // this.writeImageToDb(currentImage)
+      await this.saveResponse(currentImage) // note: await required
       this.writeImageToUser(currentImage)
+
       // Next page
       if (this.loaded) {
         this.page++
       }
       this.loaded = false
+
       // Reset ratings form
       this.emotionLabels.map(_ => _.value = null)
     },
-    async saveResponse(img, labels) {
+    async saveResponse(img) {
       const user = await usersCollection.doc(this.user).get()
       const email = user.data().email
       const data = {
         user: email,
         painting: img,
-        labels: labels
+        labels: this.emotionLabels
       }
       await responsesCollection.doc().set(data)
-    },
-    async getPoints() {
-      const userRef = usersCollection.doc(this.user)
-      await userRef.get().then(user => this.points = user.data().points)
-      // this.getLastPage()
-    },
-    getLastPage() {
-      console.log(this.points)
-      this.page = this.points / 10 % 10 + 1
     },
     async writeImageToDb(img) {
       const docRef = paintingsCollection.doc(img)
