@@ -4,11 +4,21 @@
     <b>DepiXion</b>
   </h2>
   <b-button-toolbar>
-    <b-button v-b-modal.dp-modal variant="success" class="mx-1">View Data Privacy</b-button>
+    <b-button-group class="mx-1">
+      <b-button v-b-modal.us-modal variant="success">About the Study</b-button>
+      <b-button v-b-modal.dp-modal variant="success">View Data Privacy</b-button>
+    </b-button-group>
     <b-button @click="logout" variant="danger" class="mx-1">Logout</b-button>
   </b-button-toolbar>
-  <b-modal id="dp-modal" size="xl" title="Data Privacy" centered hide-header-close ok-only>
-    <p class="mx-4 text-start">
+  <b-modal id="dp-modal" size="xl" centered hide-header-close ok-only>
+    <template #modal-header>
+      <div>
+        <h2><b>DepiXion</b></h2>
+        <h4>Generating Abstract Art Based on a User-Specified Emotion Spectrum</h4>
+      </div>
+    </template>
+    <h4><sub>Data Privacy Statement</sub></h4><br>
+    <p>
         In compliance with the Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
         (IRR) effective since September 9, 2016, I am hereby giving consent to the proponents of this 
         research to do the following:
@@ -42,13 +52,54 @@
         </ol>
         
         For any concern regarding the information collected, shared and stored by the researchers, I may 
-        reach them through their email addresses mentioned above or privacy.officer@dlsu.edu.ph.
+        reach them through their email addresses or privacy.officer@dlsu.edu.ph.
 
         By continuing with this form, I understand and am assured that necessary precautions will be taken 
         by De La Salle University and the researchers to protect my personal information and recognize 
         that improper use of the information (online, offline, or printed) will be subjected to appropriate 
         actions under the Data Privacy Act of 2012 and the institution’s Student Handbook.
       </p>
+  </b-modal>
+  <b-modal id="us-modal" size="xl" title="DepiXion" centered hide-header-close ok-only>
+    <template #modal-header>
+      <div>
+        <h2><b>DepiXion</b></h2>
+        <h4>Generating Abstract Art Based on a User-Specified Emotion Spectrum</h4>
+      </div>
+    </template>
+    <h4><sub>About the Study</sub></h4><br>
+    <p>
+      Hello! <br><br>
+
+      We are Keith Gabriel Badulis, Matthew Walden Lua, and Byron Ethelbert Nill, ID 118 Students from the 
+      College of Computer Studies taking up BS Computer Science with specializations in Software Technology. 
+      We are currently working on our thesis project entitled "Generating Abstract Art Based on a User-Specified 
+      Emotion Spectrum". Our goal is to build a software that can create abstract paintings through emotions, 
+      and we need your help! <br><br>
+
+      In answering the survey in this website, you will be shown 10 abstract paintings, and you will tell us 
+      the emotions that you feel from them. You will be allowed to answer the survey again if you wish to do so. <br><br>
+      
+      For every image that you label, you will earn 10 points. 100 points will give you one raffle ticket for a 
+      chance to win Php 250.00 or Php 500.00 through GCash! <br><br>
+
+      For any concerns or questions regarding this website or our project, in general, you may reach us through 
+      our email addresses and contact numbers below: <br><br>
+
+      <b>Keith Gabriel Badulis</b><br>
+      keith_gabriel_badulis@dlsu.edu.ph<br>
+      09123456789<br><br>
+
+      <b>Matthew Walden Lua</b><br>
+      matthew_walden_lua@dlsu.edu.ph<br>
+      09123456789<br><br>
+
+      <b>Byron Ethelbert Nill</b><br>
+      byron_ethelbert_nill@dlsu.edu.ph<br>
+      09399363044<br><br>
+
+      Thank you very much for your interest in our study!
+    </p>
   </b-modal>
 </div>
 </template>

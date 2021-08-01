@@ -10,13 +10,20 @@
     <p :style="{ color: color }">
       Hello! <br><br>
 
-      We are Keith Gabriel Badulis, Matthew Walden Lua, and Byron Ethelbert Nill, ID 118 Students from the College of Computer Studies taking up BS Computer Science with specializations in Software Technology. We are currently working on our thesis project entitled "Generating Abstract Art Based on a User-Specified Emotion Spectrum". Our goal is to build a software that can create abstract paintings through emotions, and we need your help! <br><br>
+      We are Keith Gabriel Badulis, Matthew Walden Lua, and Byron Ethelbert Nill, ID 118 Students from the 
+      College of Computer Studies taking up BS Computer Science with specializations in Software Technology. 
+      We are currently working on our thesis project entitled "Generating Abstract Art Based on a User-Specified 
+      Emotion Spectrum". Our goal is to build a software that can create abstract paintings through emotions, 
+      and we need your help! <br><br>
 
-      In this survey, you will be shown 10 abstract paintings, and you will tell us the emotions that you feel from them. You will be allowed to answer the survey again if you wish to do so. <br><br>
+      In answering the survey in this website, you will be shown 10 abstract paintings, and you will tell us 
+      the emotions that you feel from them. You will be allowed to answer the survey again if you wish to do so. <br><br>
       
-      For every image that you label, you will earn 10 points. 100 points will give you one raffle ticket for a chance to win Php 250.00 or Php 500.00 through GCash! <br><br>
+      For every image that you label, you will earn 10 points. 100 points will give you one raffle ticket for a 
+      chance to win Php 250.00 or Php 500.00 through GCash! <br><br>
 
-      For any concerns or questions regarding this website or our project, in general, you may reach us through our email addresses and contact numbers below: <br><br>
+      For any concerns or questions regarding this website or our project, in general, you may reach us through 
+      our email addresses and contact numbers below: <br><br>
 
       <b>Keith Gabriel Badulis</b><br>
       keith_gabriel_badulis@dlsu.edu.ph<br>
@@ -30,7 +37,8 @@
       byron_ethelbert_nill@dlsu.edu.ph<br>
       09399363044<br><br>
 
-      Thank you very much for your interest in our study! Please click the link below to login with your Google Account and proceed with the survey.
+      Thank you very much for your interest in our study! Please click the link below to login with your Google Account 
+      and proceed with the survey.
     </p>
 
     <img src="@/../public/login.png" @click="login" id="login" class="d-block mx-auto mt-5 w-50">

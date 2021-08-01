@@ -1,7 +1,7 @@
 <template>
   <div class="px-4 pt-4">
     <div class="text-center">
-      <h3 class="display-5 fw-bold mb-4">Data Privacy</h3>
+      <h3 class="display-5 fw-bold mb-4">Data Privacy Statement</h3>
     </div>
     <div>
       <p class="mx-4 text-start">
@@ -38,9 +38,9 @@
         </ol>
         
         For any concern regarding the information collected, shared and stored by the researchers, I may 
-        reach them through their email addresses mentioned above or privacy.officer@dlsu.edu.ph.
+        reach them through their email addresses or privacy.officer@dlsu.edu.ph.
 
-        By continuing with this form, I understand and am assured that necessary precautions will be taken 
+        By answering this form, I understand and am assured that necessary precautions will be taken 
         by De La Salle University and the researchers to protect my personal information and recognize 
         that improper use of the information (online, offline, or printed) will be subjected to appropriate 
         actions under the Data Privacy Act of 2012 and the institution’s Student Handbook.
