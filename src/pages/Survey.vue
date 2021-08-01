@@ -49,7 +49,14 @@
                   class="button-submit"
                   :class="isDisabled"
                   @click="nextPage"
-                  variant="success">Next</b-button>
+                  variant="success">
+                  <span v-if="this.page < 10">
+                    Next
+                  </span>
+                  <span v-else>
+                    Finish
+                  </span>
+                </b-button>
               </b-container>
             </b-col>
           </b-row>
@@ -67,16 +74,16 @@
 <script>
 import firebase from "firebase/app"
 import "firebase/storage";
-import { auth, usersCollection, paintingsCollection } from '@/firebase'
+import { auth, usersCollection, paintingsCollection, responsesCollection } from '@/firebase'
 export default {
   created() {
     auth.onAuthStateChanged(user => {
       this.user = user.uid
       this.markAnnotatedImages()
-      this.getPoints()
+      this.fetchFormInfo()
+      this.fetchImages()
     })
     this.storageRef = firebase.storage().ref()
-    this.fetchImages()
   },
   data() {
     return {
@@ -96,12 +103,12 @@ export default {
         {emotion: "Anticipation", value: null},
       ],
       points: null,
-      page: 1,
+      page: null,
     }
   },
   computed: {
     completed() {
-      return this.page == 10
+      return this.page == 11
     },
     imgSrc() {
       return this.imageList[this.page-1] ? this.imageList[this.page-1].url : ''
@@ -121,6 +128,13 @@ export default {
     },
     onLoaded() {
       this.loaded = true
+    },
+    async fetchFormInfo() {
+      const userRef = usersCollection.doc(this.user)
+      // display current points
+      await userRef.get().then(user => this.points = user.data().points)
+      // get last saved page
+      this.page = this.points / 10 % 10 + 1
     },
     async markAnnotatedImages() {
       const userDoc = await usersCollection.doc(this.user).get()
@@ -149,19 +163,28 @@ export default {
     async nextPage() {
       // Save image to firebase
       const currentImage = this.imageList[this.page-1].img
-      this.writeImageToDb(currentImage)
+      // this.writeImageToDb(currentImage)
+      await this.saveResponse(currentImage) // note: await required
       this.writeImageToUser(currentImage)
+
       // Next page
       if (this.loaded) {
         this.page++
       }
       this.loaded = false
+
       // Reset ratings form
       this.emotionLabels.map(_ => _.value = null)
     },
-    async getPoints() {
-      const userRef = usersCollection.doc(this.user)
-      await userRef.get().then(user => this.points = user.data().points)
+    async saveResponse(img) {
+      const user = await usersCollection.doc(this.user).get()
+      const email = user.data().email
+      const data = {
+        user: email,
+        painting: img,
+        labels: this.emotionLabels
+      }
+      await responsesCollection.doc().set(data)
     },
     async writeImageToDb(img) {
       const docRef = paintingsCollection.doc(img)
