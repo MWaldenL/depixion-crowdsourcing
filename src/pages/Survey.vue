@@ -66,7 +66,7 @@
 <script>
 import firebase from "firebase/app"
 import "firebase/storage";
-import { auth, usersCollection, paintingsCollection } from '@/firebase'
+import { auth, usersCollection, paintingsCollection, responsesCollection } from '@/firebase'
 export default {
   created() {
     auth.onAuthStateChanged(user => {
@@ -148,7 +148,8 @@ export default {
     async nextPage() {
       // Save image to firebase
       const currentImage = this.imageList[this.page-1].img
-      this.writeImageToDb(currentImage)
+      this.saveResponse(currentImage, this.emotionLabels)
+      // this.writeImageToDb(currentImage)
       this.writeImageToUser(currentImage)
       // Next page
       if (this.loaded) {
@@ -158,9 +159,24 @@ export default {
       // Reset ratings form
       this.emotionLabels.map(_ => _.value = null)
     },
+    async saveResponse(img, labels) {
+      const user = await usersCollection.doc(this.user).get()
+      const email = user.data().email
+      const data = {
+        user: email,
+        painting: img,
+        labels: labels
+      }
+      await responsesCollection.doc().set(data)
+    },
     async getPoints() {
       const userRef = usersCollection.doc(this.user)
       await userRef.get().then(user => this.points = user.data().points)
+      // this.getLastPage()
+    },
+    getLastPage() {
+      console.log(this.points)
+      this.page = this.points / 10 % 10 + 1
     },
     async writeImageToDb(img) {
       const docRef = paintingsCollection.doc(img)

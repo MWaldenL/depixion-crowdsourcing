@@ -15,10 +15,12 @@ const db = firebase.firestore()
 const auth = firebase.auth()
 const usersCollection = db.collection('users')
 const paintingsCollection = db.collection('paintings')
+const responsesCollection = db.collection('responses')
 
 export { 
   db, 
   auth, 
   usersCollection,
-  paintingsCollection
+  paintingsCollection,
+  responsesCollection,
 } 
