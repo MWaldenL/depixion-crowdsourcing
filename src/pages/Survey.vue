@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 pt-4">
+  <div class="px-4 pt-4 main-div">
     <div v-if="completed">Thank you</div>
     <div v-else class="col-lg-10 mx-auto">
       <b-card class="p-2">
@@ -48,7 +48,8 @@
                 <b-button 
                   class="button-submit"
                   :class="isDisabled"
-                  @click="nextPage">Next</b-button>
+                  @click="nextPage"
+                  variant="success">Next</b-button>
               </b-container>
             </b-col>
           </b-row>
@@ -56,7 +57,7 @@
         
         <div class="container d-flex justify-content-between align-items-end">
           <div class="col mr-4">
-            <b-progress :value="page" :max="10" show-value class="mr-3"></b-progress>
+            <b-progress :value="page" :max="10" show-value class="mr-3" variant="success"></b-progress>
           </div>
         </div>
       </b-card>
