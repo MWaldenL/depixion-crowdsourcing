@@ -30,34 +30,38 @@ const router = new VueRouter({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   const valid = ['Home', 'Survey', 'Preliminary']
+router.beforeEach(async (to, from, next) => {
+  const valid = ['Home', 'Survey', 'Preliminary']
+  const user = await firebase.getCurrentUser()
 
-//   if (to.name === 'Preliminary' || to.name === 'Survey') {
+  if (to.name === 'Preliminary' || to.name === 'Survey') {
 
-//     if (firebase.getCurrentUser()) 
-//       next()
-//     else 
-//       next({ path: '/' })
+    if (user) 
+      next()
+    else 
+      next({ path: '/' })
 
-//   } else if (to.name === 'Home') {
+  } else if (to.name === 'Home') {
 
-//     if (firebase.getCurrentUser()) 
-//       next({ path: '/prelim' })
-//     else 
-//       next()
+    if (user) {
+      console.log("hello")
+      next({ path: '/prelim' })}
+    else 
+      next()
 
-//   } else if (!valid.includes(to.name)) {
+  } else if (!valid.includes(to.name)) {
 
-//     const path = firebase.getCurrentUser() ? '/prelim' : '/'
-//     next({ path: path })
+    if (user) 
+      next({ path: '/prelim' })
+    else 
+      next({ path: '/' })
 
-//   } else {
+  } else {
 
-//     next()
+    next()
 
-//   }
+  }
 
-// })
+})
 
 export default router
