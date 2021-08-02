@@ -52,13 +52,15 @@
           </div>
           <b-row>
             <b-col class="mb-4 d-flex" lg="6" sm="12">
-              <b-img 
-                v-show="isLoaded"
-                @load="onLoaded"
-                class="form-img mx-auto" 
-                :src="imgSrc" 
-                fluid 
-                alt="Abstract Painting" />
+              <div v-show="isLoaded">
+                <b-img 
+                  @load="onLoaded"
+                  class="form-img mx-auto" 
+                  :src="imgSrc" 
+                  fluid 
+                  alt="Abstract Painting" />
+                <p>Source: WikiArt</p>
+              </div>
               <div class="loading-wrapper mx-auto flex-column" v-show="!isLoaded"> 
                 <font-awesome-icon class="mb-2" :icon="['fas','spinner']" />
                 <span class="text-muted">Loading image...</span>
