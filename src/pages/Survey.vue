@@ -148,14 +148,14 @@ export default {
       annotated: Array(2000).fill(false),
       imageList: [],
       emotionLabels: [
-        {emotion: "Joy", value: null},
-        {emotion: "Trust", value: null},
-        {emotion: "Fear", value: null},
-        {emotion: "Surprise", value: null},
-        {emotion: "Sadness", value: null},
-        {emotion: "Disgust", value: null},
-        {emotion: "Anger", value: null},
-        {emotion: "Anticipation", value: null},
+        {emotion: "Joy", value: 0},
+        {emotion: "Trust", value: 0},
+        {emotion: "Fear", value: 0},
+        {emotion: "Surprise", value: 0},
+        {emotion: "Sadness", value: 0},
+        {emotion: "Disgust", value: 0},
+        {emotion: "Anger", value: 0},
+        {emotion: "Anticipation", value: 0},
       ],
       points: null,
       page: null,
@@ -229,7 +229,7 @@ export default {
       
       if (answered) {
         const currentImage = this.imageList[this.page-1].img
-        this.writeImageToDb(currentImage)
+        await this.writeImageToDb(currentImage)
         await this.saveResponse(currentImage) // note: await required
         this.writeImageToUser(currentImage)
 
@@ -241,7 +241,7 @@ export default {
         this.textColor = "text-white"
 
         // Reset ratings form
-        this.emotionLabels.map(_ => _.value = null)
+        this.emotionLabels.map(_ => _.value = 0)
       } else {
         this.textColor = "text-danger"
       }
@@ -273,14 +273,14 @@ export default {
         })
       } else {
         await docRef.set({
-          joy: 0,
-          trust: 0,
-          fear: 0,
-          surprise: 0,
-          sadness: 0,
-          disgust: 0,
-          anger: 0,
-          anticipation: 0
+          joy: this.emotionLabels[0].value,
+          trust: this.emotionLabels[1].value,
+          fear: this.emotionLabels[2].value,
+          surprise: this.emotionLabels[3].value,
+          sadness: this.emotionLabels[4].value,
+          disgust: this.emotionLabels[5].value,
+          anger: this.emotionLabels[6].value,
+          anticipation: this.emotionLabels[7].value
         })
       }
     },
@@ -301,7 +301,7 @@ export default {
 
 .form-img {
   border-radius: 8px;
-  /* object-fit: contain; */
+  object-fit: contain; 
   height: 60vh;
 }
 
