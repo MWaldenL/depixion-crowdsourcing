@@ -242,6 +242,9 @@ export default {
 
         // Reset ratings form
         this.emotionLabels.map(_ => _.value = 0)
+
+        // Scroll to top
+        window.scrollTo(0,0);
       } else {
         this.textColor = "text-danger"
       }
