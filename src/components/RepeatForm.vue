@@ -9,7 +9,7 @@
     <h5>You currently have</h5>
     <h3 class="display-5 fw-bold mb-4">
       {{ points }} points 
-      <span v-if="points === 0">:'(</span> 
+      <span v-show="!points">:'(</span> 
     </h3>
 
     <h5>Remember!</h5>
@@ -19,7 +19,7 @@
     </p>
 
     <b-button variant="success" class="mt-4" @click="onClick">
-      Answer the form <span v-if="points">again</span>
+      Answer the form <span v-show="points">again</span>
     </b-button>
 
   </div> 
