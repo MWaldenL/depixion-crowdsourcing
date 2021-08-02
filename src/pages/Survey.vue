@@ -120,6 +120,7 @@ import "firebase/storage";
 import { auth, usersCollection, paintingsCollection, responsesCollection } from '@/firebase'
 export default {
   created() {
+    document.title = "DepiXion | Survey"
     this.storageRef = firebase.storage().ref()
     this.tutImg = require("../../public/sample.png")
 

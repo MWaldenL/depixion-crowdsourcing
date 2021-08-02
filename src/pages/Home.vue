@@ -37,6 +37,10 @@ export default {
 
   components: {
     Primer
+  },
+
+  created() {
+    document.title = "DepiXion | Login"
   }
 }
 </script>

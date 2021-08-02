@@ -24,6 +24,7 @@ import RepeatForm from '@/components/RepeatForm'
 
 export default {
   created() {
+    document.title = "DepiXion | Preliminary"
     auth.onAuthStateChanged(user => {
       this.setUser(user)
     })
