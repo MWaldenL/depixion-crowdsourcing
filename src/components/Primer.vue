@@ -1,9 +1,9 @@
 <template>
 <div class="row gx-0">
-  <div class="col-xl-8 px-0" id="img-wrapper">
-    <img :src="background" id="bg-image" class="h-100">
-    <p id="img-text">Source: WikiArt</p>
-  </div>
+  <!-- <div class="col-xl-8 px-0" id="img-wrapper"> -->
+    <img :src="background" id="bg-image" class="col-xl-8 px-0">
+    <!-- <p id="img-text">Source: WikiArt</p> -->
+  <!-- </div> -->
   <div id="primer" class="ml-auto col-xl p-5" :style="{ backgroundColor: backgroundColor }">
     <h2 :style="{ color: color }"><b>DepiXion</b></h2>
     <h4 :style="{ color: color }">Generating Abstract Art Based on a User-Specified Emotion Spectrum</h4>
@@ -142,7 +142,7 @@ export default {
   cursor: pointer;
 }
 
-#img-text {
+/* #img-text {
   position: absolute;
   left: 20px;
   bottom: 20px;
@@ -150,5 +150,5 @@ export default {
   color: #e6e6e6;
   background-color: #333333;
   opacity: 75%;
-}
+} */
 </style>
