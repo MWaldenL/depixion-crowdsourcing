@@ -118,14 +118,24 @@ import "firebase/storage";
 import { auth, usersCollection, paintingsCollection, responsesCollection } from '@/firebase'
 export default {
   created() {
+    this.storageRef = firebase.storage().ref()
+    this.tutImg = require("../../public/sample.png")
+
     auth.onAuthStateChanged(user => {
       this.user = user.uid
       this.markAnnotatedImages()
       this.fetchFormInfo()
       this.fetchImages()
+
+      usersCollection
+        .doc(this.user)
+        .get()
+        .then(user => {
+          if (!user.empty) 
+            if (!user.data().preliminary)
+              this.$router.push('/prelim')
+        })
     })
-    this.storageRef = firebase.storage().ref()
-    this.tutImg = require("../../public/sample.png")
   },
   data() {
     return {
