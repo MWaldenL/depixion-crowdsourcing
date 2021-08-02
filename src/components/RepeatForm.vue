@@ -18,7 +18,9 @@
       You can answer the form again to label new images and earn more points!
     </p>
 
-    <b-button variant="success" class="mt-4" @click="onClick">Answer the form again</b-button>
+    <b-button variant="success" class="mt-4" @click="onClick">
+      Answer the form again
+    </b-button>
 
   </div> 
 </div>

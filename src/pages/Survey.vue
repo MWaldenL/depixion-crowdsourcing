@@ -1,6 +1,25 @@
 <template>
   <div class="px-4 pt-4 main-div">
-    <div v-if="completed">Thank you</div>
+    <div v-if="completed" class="col-lg-10 mx-auto">
+      <b-card class="form-card p-4 text-center">
+        <h3 class="display-5 fw-bold mb-4">Thank you!</h3>
+        <p class="col-lg-8 mx-auto">
+          We truly appreciate your contribution to our study. If you have any questions,
+          feel free to reach out to us. Our contact details are available on the <i>About the Study</i>
+          page. If you want to contribute more and earn more points, you can click the button below 
+          and label a new set of paintings.
+        </p>
+        <p>
+          You now have <b>{{points}}</b> points.
+        </p>
+        <b-button 
+          class="mt-2"
+          @click="surveyAgain"
+          variant="success">
+          Answer the form again
+        </b-button>
+      </b-card>
+    </div>
     <div v-else class="col-lg-10 mx-auto">
       <b-card class="p-2">
         <b-container> 
@@ -44,7 +63,7 @@
                   </b-col>
                 </b-row>
               </b-container>
-              <b-container class="d-flex justify-content-center my-4">
+              <b-container class="d-flex flex-column align-items-center my-4">
                 <b-button 
                   class="button-submit"
                   :class="isDisabled"
@@ -61,7 +80,6 @@
             </b-col>
           </b-row>
         </b-container>
-        
         <div class="container d-flex justify-content-between align-items-end">
           <div class="col mr-4">
             <b-progress :value="page" :max="10" show-value class="mr-3" variant="success"></b-progress>
@@ -109,6 +127,7 @@ export default {
   computed: {
     completed() {
       return this.page == 11
+      // return true
     },
     imgSrc() {
       return this.imageList[this.page-1] ? this.imageList[this.page-1].url : ''
@@ -129,12 +148,8 @@ export default {
     onLoaded() {
       this.loaded = true
     },
-    async fetchFormInfo() {
-      const userRef = usersCollection.doc(this.user)
-      // display current points
-      await userRef.get().then(user => this.points = user.data().points)
-      // get last saved page
-      this.page = this.points / 10 % 10 + 1
+    surveyAgain() {
+      this.page = 1
     },
     async markAnnotatedImages() {
       const userDoc = await usersCollection.doc(this.user).get()
@@ -145,6 +160,13 @@ export default {
           this.annotated[index] = true;
         }
       }
+    },
+    async fetchFormInfo() {
+      const userRef = usersCollection.doc(this.user)
+      // display current points
+      await userRef.get().then(user => this.points = user.data().points)
+      // get last saved page
+      this.page = this.points / 10 % 10 + 1
     },
     async fetchImages() {
       const list = await this.storageRef.child('images').listAll()
@@ -228,6 +250,7 @@ export default {
 </script>
 
 <style scoped>
+
 .form-img {
   border-radius: 8px;
   /* object-fit: contain; */
