@@ -43,21 +43,21 @@
       </b-card>
     </div>
     <div v-else class="col-lg-10 mx-auto">
-      <b-card class="p-2">
+      <b-card class="p-lg-2">
         <b-container> 
-          <div class="mb-4 d-flex justify-content-between align-items-center">
+          <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap">
             <h3 class="fw-bold">How does this painting make you feel?</h3>
             <span v-if="points">You currently have {{points}} points</span>
             <span v-else class="text-muted">Getting your points...</span>
           </div>
           <b-row>
-            <b-col class="mb-4 d-flex" lg="6" sm="12">
+            <b-col class="mb-4 d-flex justify-content-center" lg="6" sm="12">
               <div v-show="isLoaded">
                 <b-img 
                   @load="onLoaded"
                   class="form-img mx-auto" 
                   :src="imgSrc" 
-                  fluid 
+                  fluid-grow
                   alt="Abstract Painting" />
                 <p>Source: WikiArt</p>
               </div>
@@ -68,11 +68,14 @@
             </b-col>
             <b-col class="my-auto">
               <b-container :key="lbl.emotion" v-for="lbl in emotionLabels">
-                <b-row>
-                  <b-col cols="3">
+                <div class="row mb-2 label-row align-items-center">
+                  <div class="col-md-3 col-6">
                     <label>{{ lbl.emotion }}</label>
-                  </b-col>
-                  <b-col cols="8">
+                  </div>
+                  <div class="col-md-1 col-6 order-md-last d-flex justify-content-end">
+                    {{lbl.value ? lbl.value : 0}}
+                  </div>
+                  <div class="col-md-8 order-md-1">
                     <b-form-rating  
                       stars="3"
                       v-model="lbl.value"
@@ -81,11 +84,8 @@
                       color="green"
                       no-border
                       show-clear/>
-                  </b-col>
-                  <b-col cols="1">
-                    {{lbl.value ? lbl.value : 0}}
-                  </b-col>
-                </b-row>
+                  </div>
+                </div>
               </b-container>
               <b-container class="d-flex flex-column align-items-center my-4">
                 <b-button 
@@ -298,10 +298,18 @@ export default {
 
 <style scoped>
 
+.label-row {
+  padding: 0.5rem;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d9d9d9;
+  border-radius: 8px;
+}
+
 .form-img {
   border-radius: 8px;
   /* object-fit: contain; */
-  height: 60vh;
+  max-height: 60vh;
 }
 
 .tut-img {
