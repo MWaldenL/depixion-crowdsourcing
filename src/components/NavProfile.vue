@@ -15,7 +15,7 @@
     </b-navbar-nav>
   </b-collapse>
 </b-navbar>
-<div class="p-3 d-none d-sm-flex flex-sm-row justify-content-sm-between flex-column justify-content-center align-items-center" id="nav">
+<div class="p-3 d-none d-sm-flex flex-sm-row justify-content-sm-between" id="nav">
   <h2 id="nav-title" class="m-0" @click="redirect">
     <b>DepiXion</b>
   </h2>
