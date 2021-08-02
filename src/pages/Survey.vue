@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 pt-4 main-div">
+  <div class="px-md-4 pt-4 main-div">
     <div v-if="completed" class="col-lg-10 mx-auto">
       <b-card class="form-card p-4 text-center">
         <h3 class="display-5 fw-bold mb-4">Thank you!</h3>
