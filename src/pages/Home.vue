@@ -1,6 +1,6 @@
 <template>
 <div id="home" class="d-flex main-div">
-  <Primer @login="login" />
+  <Primer @login="login" v-show="!user" />
 </div>
 </template>
 
@@ -33,6 +33,10 @@ export default {
           })
       }).catch(err => console.log(err))
     },
+
+    setUser(user) {
+      this.user = user
+    }
   },
 
   components: {
@@ -41,6 +45,15 @@ export default {
 
   created() {
     document.title = "DepiXion | Login"
+    auth.onAuthStateChanged(user => {
+      this.setUser(user)
+    })
+  },
+
+  data() {
+    return {
+      user: null
+    }
   }
 }
 </script>
