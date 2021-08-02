@@ -61,7 +61,7 @@
                 alt="Abstract Painting" />
               <div class="loading-wrapper mx-auto flex-column" v-show="!isLoaded"> 
                 <font-awesome-icon class="mb-2" :icon="['fas','spinner']" />
-                <span class="text-muted">Loading all images...</span>
+                <span class="text-muted">Loading image...</span>
               </div>
             </b-col>
             <b-col class="my-auto">
@@ -221,6 +221,7 @@ export default {
     },
     async nextPage() {
       // Save image to firebase
+
       const answered = this.emotionLabels.some(label => label.value > 0)
       
       if (answered) {
