@@ -15,9 +15,10 @@ export default {
   methods: {
     async login() {
       const provider = new firebase.auth.GoogleAuthProvider()
-      auth.signInWithPopup(provider).then((result) => {
+      // auth.signInWithPopup(provider).then((result) => {
+      auth.signInWithRedirect(provider)
+      auth.then((result) => {
         const { uid, email } = result.user
-        // this.$emit('onLogin', result.user)
         usersCollection
           .where('email', '==', email)
           .get()
