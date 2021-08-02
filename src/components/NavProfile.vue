@@ -1,6 +1,22 @@
 <template>
-<div class="p-3 d-flex justify-content-between align-content-end" id="nav">
-  <h2 id="nav-title" @click="redirect">
+<div>
+<b-navbar class="d-sm-none p-3" toggleable="lg" type="dark" id="nav-sm">
+  <b-navbar-brand href="/prelim">
+    <h2 class="nav-sm-title"><b>DepiXion</b></h2>
+  </b-navbar-brand>
+
+  <b-navbar-toggle target="nav-collapse" class="nav-sm-title"></b-navbar-toggle>
+
+  <b-collapse id="nav-collapse" class="mt-3" is-nav>
+    <b-navbar-nav>
+      <b-button v-b-modal.us-modal variant="success" class="my-2">About the Study</b-button>
+      <b-button v-b-modal.dp-modal variant="success" class="my-2">View Data Privacy</b-button>
+      <b-button @click="logout" variant="danger" class="my-2">Logout</b-button>
+    </b-navbar-nav>
+  </b-collapse>
+</b-navbar>
+<div class="p-3 d-none d-sm-flex flex-sm-row justify-content-sm-between flex-column justify-content-center align-items-center" id="nav">
+  <h2 id="nav-title" class="m-0" @click="redirect">
     <b>DepiXion</b>
   </h2>
   <b-button-toolbar>
@@ -102,6 +118,7 @@
     </p>
   </b-modal>
 </div>
+</div>
 </template>
 
 <script>
@@ -130,8 +147,12 @@ export default {
 </script>
 
 <style scoped>
-#nav {
+#nav, #nav-sm {
   background-color: #333333;
+  color: #e6e6e6;
+}
+
+.nav-sm-title {
   color: #e6e6e6;
 }
 

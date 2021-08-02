@@ -40,8 +40,12 @@ export default {
 </script>
 
 <style>
+html, body {
+  height: 100%;
+}
+
 #app {
-  height: 100vh;
+  height: 100%;
 }
 
 .main-div {
