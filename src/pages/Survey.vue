@@ -310,7 +310,7 @@ export default {
 .form-img {
   border-radius: 8px;
   /* object-fit: contain; */
-  max-height: 60vh;
+  max-height: 70vh;
   object-fit: contain; 
 }
 
