@@ -43,9 +43,9 @@ router.beforeEach(async (to, from, next) => {
 
   } else if (to.name === 'Home') {
 
-    if (user) {
-      console.log("hello")
-      next({ path: '/prelim' })}
+    if (user) 
+      
+      next({ path: '/prelim' })
     else 
       next()
 
