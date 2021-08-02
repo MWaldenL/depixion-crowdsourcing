@@ -19,7 +19,7 @@
     </p>
 
     <b-button variant="success" class="mt-4" @click="onClick">
-      Answer the form again
+      Answer the form <span v-if="points">again</span>
     </b-button>
 
   </div> 
