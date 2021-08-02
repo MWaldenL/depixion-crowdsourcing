@@ -20,6 +20,28 @@
         </b-button>
       </b-card>
     </div>
+    <div v-else-if="!tutored" class="col-lg-10 mx-auto">
+      <b-card class="p-2 d-flex flex-column align-items-center text-center">
+        <h3 class="fw-bold mb-4">Emotion Labeling Reminders</h3>
+        <b-img class="tut-img mb-4" fluid :src="tutImg"/>
+        <p class="col-lg-6 mx-auto">
+          Ten different images of abstract paintings will be displayed. 
+          For each image, you will be tasked to label them based on the emotions you feel.
+          You can select one of the three levels of intensity for each emotion.
+          You can also select multiple emotions in a single painting.
+          You can remove the emotion label by clicking X.
+        </p>
+        <p class="col-lg-6 mx-auto">
+          <b>Note:</b> You cannot go back to the previous image when proceeding to the next.
+        </p>
+        <b-button 
+          class="mt-2"
+          @click="tutored = true"
+          variant="success">
+          Begin answering
+        </b-button>
+      </b-card>
+    </div>
     <div v-else class="col-lg-10 mx-auto">
       <b-card class="p-2">
         <b-container> 
@@ -102,6 +124,7 @@ export default {
       this.fetchImages()
     })
     this.storageRef = firebase.storage().ref()
+    this.tutImg = require("../../public/sample.png")
   },
   data() {
     return {
@@ -122,6 +145,8 @@ export default {
       ],
       points: null,
       page: null,
+      tutored: false,
+      tutImg: "",
     }
   },
   computed: {
@@ -255,6 +280,10 @@ export default {
   border-radius: 8px;
   /* object-fit: contain; */
   height: 60vh;
+}
+
+.tut-img {
+  max-height: 50vh;
 }
 
 .loading-wrapper {
