@@ -99,6 +99,7 @@
                   </span>
                 </b-button>
               </b-container>
+              <p class="text-center" :class="textColor">Please select at least one emotion label</p>
             </b-col>
           </b-row>
         </b-container>
@@ -117,14 +118,24 @@ import "firebase/storage";
 import { auth, usersCollection, paintingsCollection, responsesCollection } from '@/firebase'
 export default {
   created() {
+    this.storageRef = firebase.storage().ref()
+    this.tutImg = require("../../public/sample.png")
+
     auth.onAuthStateChanged(user => {
       this.user = user.uid
       this.markAnnotatedImages()
       this.fetchFormInfo()
       this.fetchImages()
+
+      usersCollection
+        .doc(this.user)
+        .get()
+        .then(user => {
+          if (!user.empty) 
+            if (!user.data().preliminary)
+              this.$router.push('/prelim')
+        })
     })
-    this.storageRef = firebase.storage().ref()
-    this.tutImg = require("../../public/sample.png")
   },
   data() {
     return {
@@ -147,6 +158,7 @@ export default {
       page: null,
       tutored: false,
       tutImg: "",
+      textColor: "text-white"
     }
   },
   computed: {
@@ -209,19 +221,27 @@ export default {
     },
     async nextPage() {
       // Save image to firebase
-      const currentImage = this.imageList[this.page-1].img
-      // await this.writeImageToDb(currentImage)
-      await this.saveResponse(currentImage) // note: await required
-      this.writeImageToUser(currentImage)
 
-      // Next page
-      if (this.loaded) {
-        this.page++
+      const answered = this.emotionLabels.some(label => label.value > 0)
+      
+      if (answered) {
+        const currentImage = this.imageList[this.page-1].img
+        this.writeImageToDb(currentImage)
+        await this.saveResponse(currentImage) // note: await required
+        this.writeImageToUser(currentImage)
+
+        // Next page
+        if (this.loaded) {
+          this.page++
+        }
+        this.loaded = false
+        this.textColor = "text-white"
+
+        // Reset ratings form
+        this.emotionLabels.map(_ => _.value = null)
+      } else {
+        this.textColor = "text-danger"
       }
-      this.loaded = false
-
-      // Reset ratings form
-      this.emotionLabels.map(_ => _.value = null)
     },
     async saveResponse(img) {
       const user = await usersCollection.doc(this.user).get()
