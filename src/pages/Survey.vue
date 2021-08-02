@@ -61,7 +61,7 @@
                 alt="Abstract Painting" />
               <div class="loading-wrapper mx-auto flex-column" v-show="!isLoaded"> 
                 <font-awesome-icon class="mb-2" :icon="['fas','spinner']" />
-                <span class="text-muted">Loading all images...</span>
+                <span class="text-muted">Loading image...</span>
               </div>
             </b-col>
             <b-col class="my-auto">
@@ -210,7 +210,7 @@ export default {
     async nextPage() {
       // Save image to firebase
       const currentImage = this.imageList[this.page-1].img
-      // this.writeImageToDb(currentImage)
+      // await this.writeImageToDb(currentImage)
       await this.saveResponse(currentImage) // note: await required
       this.writeImageToUser(currentImage)
 
