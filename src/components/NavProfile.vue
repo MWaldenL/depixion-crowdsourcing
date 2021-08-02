@@ -1,6 +1,6 @@
 <template>
 <div class="p-3 d-flex justify-content-between align-content-end" id="nav">
-  <h2>
+  <h2 id="nav-title" @click="redirect">
     <b>DepiXion</b>
   </h2>
   <b-button-toolbar>
@@ -121,6 +121,10 @@ export default {
           console.log(err)
         })
     },
+
+    redirect() {
+      this.$router.push("/prelim")
+    }
   }
 };
 </script>
@@ -129,5 +133,9 @@ export default {
 #nav {
   background-color: #333333;
   color: #e6e6e6;
+}
+
+#nav-title:hover {
+  cursor: pointer;
 }
 </style>
