@@ -40,15 +40,8 @@ export default {
 </script>
 
 <style>
-html, body {
+html, body, #app {
   height: 100%;
-}
-
-#app {
-  height: 100%;
-}
-
-.main-div {
   background-color: #e6e6e6;
   color: #333333;
 }
