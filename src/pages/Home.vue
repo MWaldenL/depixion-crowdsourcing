@@ -26,6 +26,7 @@ export default {
                 email: email,
                 preliminary: false,
                 points: 0,
+                visualArts: [],
                 paintingsAnnotated: []
               })
             }
