@@ -25,7 +25,8 @@ export default {
               usersCollection.doc(uid).set({
                 email: email,
                 preliminary: false,
-                points: 0
+                points: 0,
+                paintingsAnnotated: []
               })
             }
             this.$router.push("/prelim")

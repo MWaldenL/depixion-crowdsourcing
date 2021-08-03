@@ -123,13 +123,12 @@ export default {
     document.title = "DepiXion | Survey"
     this.storageRef = firebase.storage().ref()
     this.tutImg = require("../../public/sample.png")
-
-    auth.onAuthStateChanged(user => {
+  },
+  mounted() {
+    auth.onAuthStateChanged(async user => {
       this.user = user.uid
-      this.markAnnotatedImages()
+      await this.fetchImages()
       this.fetchFormInfo()
-      this.fetchImages()
-
       usersCollection
         .doc(this.user)
         .get()
@@ -139,13 +138,13 @@ export default {
               this.$router.push('/prelim')
         })
     })
-  },
+  }, 
   data() {
     return {
       user: null,
       loaded: false,
       storageRef: null,
-      annotated: Array(2000).fill(false),
+      userAnnotated: [],
       imageList: [],
       emotionLabels: [
         {emotion: "Joy", value: 0},
@@ -167,7 +166,6 @@ export default {
   computed: {
     completed() {
       return this.page == 11
-      // return true
     },
     imgSrc() {
       return this.imageList[this.page-1] ? this.imageList[this.page-1].url : ''
@@ -188,17 +186,30 @@ export default {
     onLoaded() {
       this.loaded = true
     },
-    surveyAgain() {
+    async surveyAgain() {
+      // add annotated images to vue
+      const userDoc = await usersCollection.doc(this.user).get()
+      this.userAnnotated = await userDoc.data().paintingsAnnotated
+      await this.fetchImages()
       this.page = 1
     },
-    async markAnnotatedImages() {
+    async fetchImages() {
+      // Mark annotated images 
       const userDoc = await usersCollection.doc(this.user).get()
-      const annotated = userDoc.data().paintingsAnnotated;  
-      for (let img of annotated) {
-        const index = this.annotated.indexOf(img)
-        if (index >= 0) {
-          this.annotated[index] = true;
-        }
+      const data = userDoc.data()
+      this.userAnnotated = data.paintingsAnnotated
+      // Fetch images
+      this.imageList = []
+      const list = await this.storageRef.child('images').listAll()
+      for (let i=0; i < 10; i++) {
+        let rand, img, url, imgPath
+        do { // keep fetching while the selected image has been annotated
+          rand = Math.floor(Math.random()*list.items.length) // random index
+          imgPath = list.items[rand].fullPath
+          img = imgPath.split('/')[1]
+          url = await this.storageRef.child(imgPath).getDownloadURL()
+        } while (this.userAnnotated.includes(img)) 
+        this.imageList.push({url, img})
       }
     },
     async fetchFormInfo() {
@@ -208,30 +219,14 @@ export default {
       // get last saved page
       this.page = this.points / 10 % 10 + 1
     },
-    async fetchImages() {
-      const list = await this.storageRef.child('images').listAll()
-      for (let i=0; i < 10; i++) {
-        let rand;
-        do {
-          rand = Math.floor(Math.random()*list.items.length)
-        } while (this.annotated[rand])
-        this.annotated[rand] = true
-        const imgPath = list.items[rand].fullPath
-        const img = imgPath.split('/')[1]
-        const url = await this.storageRef.child(imgPath).getDownloadURL()
-        this.imageList.push({url, img})
-      }
-    },
     async nextPage() {
       // Save image to firebase
-
       const answered = this.emotionLabels.some(label => label.value > 0)
-      
       if (answered) {
         const currentImage = this.imageList[this.page-1].img
         await this.writeImageToDb(currentImage)
         await this.saveResponse(currentImage) // note: await required
-        this.writeImageToUser(currentImage)
+        await this.writeImageToUser(currentImage)
 
         // Next page
         if (this.loaded) {
