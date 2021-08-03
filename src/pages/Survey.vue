@@ -191,7 +191,6 @@ export default {
       const userDoc = await usersCollection.doc(this.user).get()
       this.userAnnotated = await userDoc.data().paintingsAnnotated
       await this.fetchImages()
-      this.$router.push('/prelim')
       this.page = 1
     },
     async fetchImages() {
