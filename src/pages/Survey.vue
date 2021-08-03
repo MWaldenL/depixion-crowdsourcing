@@ -14,9 +14,9 @@
         </p>
         <b-button 
           class="mt-2"
-          @click="surveyAgain"
+          @click="backToPrimer"
           variant="success">
-          Answer the form again
+          Go Back
         </b-button>
       </b-card>
     </div>
@@ -186,13 +186,9 @@ export default {
     onLoaded() {
       this.loaded = true
     },
-    async surveyAgain() {
+    backToPrimer() {
       // add annotated images to vue
-      const userDoc = await usersCollection.doc(this.user).get()
-      this.userAnnotated = await userDoc.data().paintingsAnnotated
-      await this.fetchImages()
       this.$router.push('/prelim')
-      this.page = 1
     },
     async fetchImages() {
       // Mark annotated images 
