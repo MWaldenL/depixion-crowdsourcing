@@ -14,9 +14,9 @@
         </p>
         <b-button 
           class="mt-2"
-          @click="surveyAgain"
+          @click="backToPrimer"
           variant="success">
-          Answer the form again
+          Go Back
         </b-button>
       </b-card>
     </div>
@@ -118,6 +118,7 @@
 import firebase from "firebase/app"
 import "firebase/storage";
 import { auth, usersCollection, paintingsCollection, responsesCollection } from '@/firebase'
+
 export default {
   created() {
     document.title = "DepiXion | Survey"
@@ -186,12 +187,9 @@ export default {
     onLoaded() {
       this.loaded = true
     },
-    async surveyAgain() {
+    backToPrimer() {
       // add annotated images to vue
-      const userDoc = await usersCollection.doc(this.user).get()
-      this.userAnnotated = await userDoc.data().paintingsAnnotated
-      await this.fetchImages()
-      this.page = 1
+      this.$router.push('/prelim')
     },
     async fetchImages() {
       // Mark annotated images 
@@ -200,14 +198,23 @@ export default {
       this.userAnnotated = data.paintingsAnnotated
       // Fetch images
       this.imageList = []
-      const list = await this.storageRef.child('images').listAll()
+      // const list = await this.storageRef.child('images').listAll()
+      const pool1 = await fetch("https://res.cloudinary.com/kbadulis/image/list/pool.json")
+      const sublist1 = await pool1.json()
+      const pool2 = await fetch("https://res.cloudinary.com/kbadulis/image/list/pool-two.json")
+      const sublist2 = await pool2.json()
+      const list = sublist1.resources.concat(sublist2.resources)
+
+      console.log(list)
+      
+      const urlPrefix = "https://res.cloudinary.com/kbadulis/image/upload/v1628054226/images/"
+
       for (let i=0; i < 10; i++) {
         let rand, img, url, imgPath
         do { // keep fetching while the selected image has been annotated
-          rand = Math.floor(Math.random()*list.items.length) // random index
-          imgPath = list.items[rand].fullPath
-          img = imgPath.split('/')[1]
-          url = await this.storageRef.child(imgPath).getDownloadURL()
+          rand = Math.floor(Math.random()*list.length) // random index
+          img = list[rand].public_id.split('/')[1] + '.jpg'
+          url = urlPrefix + img
         } while (this.userAnnotated.includes(img)) 
         this.imageList.push({url, img})
       }
