@@ -9,6 +9,15 @@
 import { auth } from '@/firebase'
 import NavProfile from './components/NavProfile.vue'
 
+// feel ko di na to kailangan kasi pinublic ko lahat hehe
+import Cloudinary from 'cloudinary-vue'
+import Vue from 'vue'
+Vue.use(Cloudinary, {
+  configuration: {
+    cloudName: "kbadulis"
+  }
+});
+
 export default {
   name: 'App',
   created() {

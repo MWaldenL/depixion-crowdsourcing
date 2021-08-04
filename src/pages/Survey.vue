@@ -118,6 +118,7 @@
 import firebase from "firebase/app"
 import "firebase/storage";
 import { auth, usersCollection, paintingsCollection, responsesCollection } from '@/firebase'
+
 export default {
   created() {
     document.title = "DepiXion | Survey"
@@ -197,14 +198,18 @@ export default {
       this.userAnnotated = data.paintingsAnnotated
       // Fetch images
       this.imageList = []
-      const list = await this.storageRef.child('images').listAll()
+      // const list = await this.storageRef.child('images').listAll()
+      const response = await fetch("https://res.cloudinary.com/kbadulis/image/list/pool.json")
+      const list = await response.json()
+
+      const urlPrefix = "https://res.cloudinary.com/kbadulis/image/upload/v1628054226/images/"
+
       for (let i=0; i < 10; i++) {
         let rand, img, url, imgPath
         do { // keep fetching while the selected image has been annotated
-          rand = Math.floor(Math.random()*list.items.length) // random index
-          imgPath = list.items[rand].fullPath
-          img = imgPath.split('/')[1]
-          url = await this.storageRef.child(imgPath).getDownloadURL()
+          rand = Math.floor(Math.random()*list.resources.length) // random index
+          img = list.resources[rand].public_id.split('/')[1] + '.jpg'
+          url = urlPrefix + img
         } while (this.userAnnotated.includes(img)) 
         this.imageList.push({url, img})
       }
