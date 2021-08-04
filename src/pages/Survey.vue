@@ -116,13 +116,11 @@
 </template>
 <script>
 import firebase from "firebase/app"
-import "firebase/storage";
-import { auth, usersCollection, paintingsCollection, responsesCollection } from '@/firebase'
+import { auth, usersCollection, responsesCollection } from '@/firebase'
 
 export default {
   created() {
     document.title = "DepiXion | Survey"
-    this.storageRef = firebase.storage().ref()
     this.tutImg = require("../../public/sample.png")
   },
   mounted() {
@@ -144,7 +142,6 @@ export default {
     return {
       user: null,
       loaded: false,
-      storageRef: null,
       userAnnotated: [],
       imageList: [],
       emotionLabels: [
@@ -230,8 +227,7 @@ export default {
       // Save image to firebase
       const answered = this.emotionLabels.some(label => label.value > 0)
       if (answered) {
-        const currentImage = this.imageList[this.page-1].img
-        await this.writeImageToDb(currentImage)
+        let currentImage = this.imageList[this.page-1].img.split("_")[0] + ".jpg"
         await this.saveResponse(currentImage) // note: await required
         await this.writeImageToUser(currentImage)
 
@@ -260,34 +256,6 @@ export default {
         labels: this.emotionLabels
       }
       await responsesCollection.doc().set(data)
-    },
-    async writeImageToDb(img) {
-      const docRef = paintingsCollection.doc(img)
-      const doc = await docRef.get()
-      if (doc.exists) {
-        const { joy, trust, fear, surprise, sadness, disgust, anger, anticipation } = doc.data()
-        await docRef.update({
-          joy: joy + this.emotionLabels[0].value,
-          trust: trust + this.emotionLabels[1].value,
-          fear: fear + this.emotionLabels[2].value,
-          surprise: surprise + this.emotionLabels[3].value,
-          sadness: sadness + this.emotionLabels[4].value,
-          disgust: disgust + this.emotionLabels[5].value,
-          anger: anger + this.emotionLabels[6].value,
-          anticipation: anticipation + this.emotionLabels[7].value
-        })
-      } else {
-        await docRef.set({
-          joy: this.emotionLabels[0].value,
-          trust: this.emotionLabels[1].value,
-          fear: this.emotionLabels[2].value,
-          surprise: this.emotionLabels[3].value,
-          sadness: this.emotionLabels[4].value,
-          disgust: this.emotionLabels[5].value,
-          anger: this.emotionLabels[6].value,
-          anticipation: this.emotionLabels[7].value
-        })
-      }
     },
     async writeImageToUser(img) {
       const userRef = usersCollection.doc(this.user)
