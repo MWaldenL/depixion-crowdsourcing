@@ -125,6 +125,7 @@ export default {
   },
   mounted() {
     auth.onAuthStateChanged(async user => {
+      console.log('auth state changed called')
       this.user = user.uid
       await this.fetchImages()
       this.fetchFormInfo()
@@ -210,10 +211,12 @@ export default {
         let rand, img, url, imgPath
         do { // keep fetching while the selected image has been annotated
           rand = Math.floor(Math.random()*list.length) // random index
-          img = list[rand].public_id.split('/')[1] + '.jpg'
-          url = urlPrefix + img
+          imgPath = list[rand].public_id.split('/')[1]
+          img = imgPath.split('_')[0] + '.jpg'
+          url = urlPrefix + `${imgPath}.jpg`
         } while (this.userAnnotated.includes(img)) 
         this.imageList.push({url, img})
+        console.log(this.imageList)
       }
     },
     async fetchFormInfo() {
