@@ -230,7 +230,7 @@ export default {
       // Save image to firebase
       const answered = this.emotionLabels.some(label => label.value > 0)
       if (answered) {
-        let currentImage = this.imageList[this.page-1].img.split("_")[0] + ".jpg"
+        let currentImage = this.imageList[this.page-1].img
         await this.saveResponse(currentImage) // note: await required
         await this.writeImageToUser(currentImage)
 
