@@ -1,13 +1,19 @@
 <template>
 <div id="home" class="d-flex main-div">
   <Primer @login="login" v-show="!user" />
+  <VueJsonToCsv :json-data="docs">
+    <button>
+      <b>Save</b>
+  </button>
+  </VueJsonToCsv>
 </div>
 </template>
 
 <script>
 import firebase from 'firebase/app'
-import { auth, usersCollection } from '@/firebase'
+import { auth, usersCollection, responsesCollection } from '@/firebase'
 import Primer from '@/components/Primer'
+import VueJsonToCsv from 'vue-json-to-csv'
 
 export default {
   name: "Home",
@@ -41,7 +47,8 @@ export default {
   },
 
   components: {
-    Primer
+    Primer,
+    VueJsonToCsv
   },
 
   created() {
@@ -51,9 +58,39 @@ export default {
     })
   },
 
+  mounted() {
+    // responsesCollection
+    //   .get()
+    //   .then(query => {
+    //     let data
+    //     let dataAdded
+    //     query.forEach(doc => {
+    //       data = doc.data()
+    //       dataAdded = {
+    //         "user": data.user,
+    //         "painting": data.painting,
+    //         "joy": data.labels[0].value,
+    //         "trust": data.labels[1].value,
+    //         "fear": data.labels[2].value,
+    //         "surprise": data.labels[3].value,
+    //         "sadness": data.labels[4].value,
+    //         "disgust": data.labels[5].value,
+    //         "anger": data.labels[6].value,
+    //         "anticipation": data.labels[7].value,
+    //       }
+    //       console.log(data)
+    //       console.log("")
+    //       console.log(dataAdded)
+
+    //       this.docs.push(dataAdded)
+    //     }) 
+    //   })
+  },
+
   data() {
     return {
-      user: null
+      user: null,
+      docs: []
     }
   }
 }
