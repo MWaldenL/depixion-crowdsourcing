@@ -213,7 +213,7 @@ export default {
       const urlPrefix = "https://res.cloudinary.com/kbadulis/image/upload/v1628054226/images/"
 
       for (let i=0; i < 10; i++) {
-        let rand, img, url, imgPath
+        let rand, img, url, imgPath, imgnojpg
         do { // keep fetching while the selected image has been annotated
           rand = Math.floor(Math.random()*list.length) // random index
           imgPath = list[rand].public_id.split('/')[1]
