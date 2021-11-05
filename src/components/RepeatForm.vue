@@ -14,7 +14,7 @@
 
     <h5>Remember!</h5>
     <p>
-      100 points is equivalent to one raffle ticket for a for a chance to win Php 250.00 or Php 500.00 through GCash <br>
+      100 points is equivalent to one raffle ticket for a for a chance to win Php 250.00 through GCash <br>
       You can answer the form again to label new images and earn more points!
     </p>
 
