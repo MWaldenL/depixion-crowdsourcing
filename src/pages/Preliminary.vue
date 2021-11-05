@@ -7,10 +7,12 @@
 </b-container>
 
 <b-container v-else class="main-div">
-  <b-row>
-    <DataPrivacy class="col-xl" />
-    <div class="col-xl-1"></div>
-    <VisualArtPreliminary class="col-xl" @completePrelim="updateDB" />
+  <b-row class="col-xl-8 mx-auto mt-5">
+    <DataPrivacy/>
+    <hr/>
+    <b-button @click="accept" variant="success" class="col-2 mx-auto">Continue</b-button>
+    <!-- <div class="col-xl-1"></div> -->
+    <!-- <VisualArtPreliminary class="col-xl" @completePrelim="updateDB" /> -->
   </b-row>
 </b-container>
 
@@ -43,6 +45,14 @@ export default {
   },
 
   methods: {
+    async accept() {      
+      await usersCollection.doc(this.user.uid).update({
+        preliminary: true,
+      })
+
+      this.$router.push("/survey")
+    },
+
     setUser(user) {
       this.user = user
 

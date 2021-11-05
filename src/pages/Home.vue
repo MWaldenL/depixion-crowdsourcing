@@ -1,11 +1,11 @@
 <template>
 <div id="home" class="d-flex main-div">
   <Primer @login="login" v-show="!user" />
-  <VueJsonToCsv :json-data="docs">
+  <!-- <VueJsonToCsv :json-data="docs">
     <button>
       <b>Save</b>
-  </button>
-  </VueJsonToCsv>
+    </button>
+  </VueJsonToCsv> -->
 </div>
 </template>
 
