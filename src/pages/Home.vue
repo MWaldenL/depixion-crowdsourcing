@@ -58,34 +58,31 @@ export default {
     })
   },
 
-  mounted() {
-    // responsesCollection
-    //   .get()
-    //   .then(query => {
-    //     let data
-    //     let dataAdded
-    //     query.forEach(doc => {
-    //       data = doc.data()
-    //       dataAdded = {
-    //         "user": data.user,
-    //         "painting": data.painting,
-    //         "joy": data.labels[0].value,
-    //         "trust": data.labels[1].value,
-    //         "fear": data.labels[2].value,
-    //         "surprise": data.labels[3].value,
-    //         "sadness": data.labels[4].value,
-    //         "disgust": data.labels[5].value,
-    //         "anger": data.labels[6].value,
-    //         "anticipation": data.labels[7].value,
-    //       }
-    //       console.log(data)
-    //       console.log("")
-    //       console.log(dataAdded)
+  // mounted() {
+  //   responsesCollection
+  //     .get()
+  //     .then(query => {
+  //       let data
+  //       let dataAdded
+  //       query.forEach(doc => {
+  //         data = doc.data()
+  //         dataAdded = {
+  //           "user": data.user,
+  //           "painting": data.painting,
+  //           "joy": data.labels[0].value,
+  //           "trust": data.labels[1].value,
+  //           "fear": data.labels[2].value,
+  //           "surprise": data.labels[3].value,
+  //           "sadness": data.labels[4].value,
+  //           "disgust": data.labels[5].value,
+  //           "anger": data.labels[6].value,
+  //           "anticipation": data.labels[7].value,
+  //         }
 
-    //       this.docs.push(dataAdded)
-    //     }) 
-    //   })
-  },
+  //         this.docs.push(dataAdded)
+  //       }) 
+  //     })
+  // },
 
   data() {
     return {
