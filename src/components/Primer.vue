@@ -20,9 +20,6 @@
 
       In answering the survey in this website, you will be shown 10 abstract paintings, and you will tell us 
       the emotions that you feel from them. You will be allowed to answer the survey again if you wish to do so. <br><br>
-      
-      For every image that you label, you will earn 10 points. 100 points will give you one raffle ticket for a 
-      chance to win Php 250.00 through GCash! <br><br>
 
       For any concerns or questions regarding this website or our project, in general, you may reach us through 
       our email addresses and contact numbers below: <br><br>
