@@ -12,36 +12,36 @@ import Cloudinary from 'cloudinary-vue'
 import Vue from 'vue'
 Vue.use(Cloudinary, {
   configuration: {
-    cloudName: "kbadulis"
+	cloudName: "kbadulis"
   }
 });
 
 export default {
   name: 'App',
   created() {
-    auth.onAuthStateChanged(user => {
-      this.isLoggedIn = user !== null
-      this.setUser(user)
-    })
+	auth.onAuthStateChanged(user => {
+	  this.isLoggedIn = user !== null
+	  this.setUser(user)
+	})
   },
   data() {
-    return {
-      user: null,
-      isLoggedIn: false
-    }
+	return {
+	  user: null,
+	  isLoggedIn: false
+	}
   },
   components: {
-    NavProfile
+	NavProfile
   },
   methods: {
-    setUser(user) {
-      this.user = user
-    },
-    logout() {
-      this.$router.push("/")
-      auth.signOut()
-        .catch(err => console.log(err))
-    },
+	setUser(user) {
+	  this.user = user
+	},
+	logout() {
+	  this.$router.push("/")
+	  auth.signOut()
+		.catch(err => console.log(err))
+	},
   }
 }
 </script>

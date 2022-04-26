@@ -35,13 +35,9 @@ router.beforeEach(async (to, from, next) => {
 	const user = await firebase.getCurrentUser()
 	if (to.name === 'Preliminary' || to.name === 'Survey') {
 		next()
-	} else if (to.name === 'Home') {
+	} else if (to.name === 'Home' || !valid.includes(to.name)) {
 		if (user)
-			next({ path: '/prelim' })
-		else next()
-	} else if (!valid.includes(to.name)) {
-		if (user)
-			next({ path: '/prelim' })
+			next({ path: '/survey' })
 		else next({ path: '/' })
 	} else {
 		next()

@@ -15,9 +15,6 @@
                     you can click the button below and label a new set of
                     paintings.
                 </p>
-                <p>
-                    You now have <b>{{ points }}</b> points.
-                </p>
                 <b-button class="mt-2" @click="backToPrimer" variant="success">
                     Go Back
                 </b-button>
@@ -65,8 +62,6 @@
                         <h3 class="fw-bold">
                             How does this painting make you feel?
                         </h3>
-                        <span v-if="points">You currently have {{ points }} points</span>
-                        <span v-else class="text-muted">Getting your points...</span>
                     </div>
                     <b-row>
                         <b-col
@@ -181,7 +176,6 @@
     </div>
 </template>
 <script>
-import VueCookies from 'vue-cookies'
 import firebase from "firebase/app";
 import { usersCollection, responsesCollection } from "@/firebase";
 
@@ -191,27 +185,27 @@ export default {
         this.tutImg = require("../../public/sample.png");
     },
     mounted() {
-		// retrieve user from either cookies or firebase
+		// retrieve user from either localStorage or firebase
 		firebase.auth().onAuthStateChanged(async user => {
 			if (user) { // Firebase gets uid from localStorage when w/in the same session
-				console.log(user.uid)
+                console.log("Auth state changed: uid is", user.uid)
 				this.user = user.uid
+
 				// try retrieving the user from firebase
 				usersCollection.doc(user.uid).get()
-					.then(user => {
-						if (!user.exists) { // create a new user if no user exists
-							// usersCollection.doc(user.uid).set({
-							// 	points: 0,
-							// 	paintingsAnnotated: []
-							// })	
+					.then(doc => {
+						if (!doc.exists) { // create a new user if no user exists
+							usersCollection.doc(this.user).set({
+								points: 0,
+								paintingsAnnotated: []
+							})	
 						}
 					})
-				
+
 				await this.fetchImages();
-				// this.fetchFormInfo();
+				this.fetchFormInfo();
 			} else { // New session: sign in anonymously
-				console.error('No user. User is ', user)
-				firebase.auth().signInAnonymously()
+                firebase.auth().signInAnonymously()
 			}
 		});
     },
@@ -275,7 +269,6 @@ export default {
 
             // Fetch images
             this.imageList = [];
-            // const list = await this.storageRef.child('images').listAll()
             const pool1 = await fetch(
                 "https://res.cloudinary.com/kbadulis/image/list/pool.json"
             );
@@ -285,21 +278,17 @@ export default {
             );
             const sublist2 = await pool2.json();
             const list = sublist1.resources.concat(sublist2.resources);
-
-            console.log(list);
-
             const urlPrefix =
                 "https://res.cloudinary.com/kbadulis/image/upload/v1628054226/images/";
 
-            for (let i = 0; i < 10; i++) {
-                let rand, img, url, imgPath, imgnojpg;
-                do {
-                    // keep fetching while the selected image has been annotated
+            // Select images for the user
+            for (let i=0; i < 10; i++) {
+                let rand, img, url, imgPath
+                do { // keep fetching while the selected image has already been annotated
                     rand = Math.floor(Math.random() * list.length); // random index
                     imgPath = list[rand].public_id.split("/")[1];
-                    img = imgPath.split("_")[0] + ".jpg";
-                    imgnojpg = imgPath.split("_")[0];
-                    url = urlPrefix + `${imgPath}.jpg`;
+                    img = `${imgPath.split("_")[0]}.jpg`
+                    url = `${urlPrefix}${imgPath}.jpg`;
                 } while (this.userAnnotated.includes(img));
                 this.imageList.push({ url, img });
             }
@@ -320,8 +309,8 @@ export default {
             );
             if (answered) {
                 let currentImage = this.imageList[this.page - 1].img;
-                await this.saveResponse(currentImage); // note: await required
-                await this.writeImageToUser(currentImage);
+                await this.saveResponse(currentImage)
+                await this.writeImageToUser(currentImage)
 
                 // Next page
                 if (this.loaded) {
@@ -339,15 +328,12 @@ export default {
                 this.textColor = "text-danger";
             }
         },
-        async saveResponse(img) {
-            const user = await usersCollection.doc(this.user).get();
-            const email = user.data().email;
-            const data = {
-                user: email,
+        async saveResponse(img) { 
+            await responsesCollection.doc().set({
+                user: this.user,
                 painting: img,
                 labels: this.emotionLabels,
-            };
-            await responsesCollection.doc().set(data);
+            });
         },
         async writeImageToUser(img) {
             const userRef = usersCollection.doc(this.user);

@@ -24,7 +24,7 @@
       <b-button v-b-modal.us-modal variant="success">About the Study</b-button>
       <b-button v-b-modal.dp-modal variant="success">View Data Privacy</b-button>
     </b-button-group>
-    <b-button @click="logout" variant="danger" class="mx-1">Logout</b-button>
+    <!-- <b-button @click="logout" variant="danger" class="mx-1">Logout</b-button> -->
   </b-button-toolbar>
   <b-modal id="dp-modal" size="xl" centered hide-header-close ok-only>
     <template #modal-header>
