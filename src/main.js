@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import VueCookies from 'vue-cookies'
 import router from './router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -13,6 +14,7 @@ library.add(faSpinner)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+Vue.use(VueCookies, { expire: '7d', secure: 'true'})
 Vue.config.productionTip = false
 
 new Vue({

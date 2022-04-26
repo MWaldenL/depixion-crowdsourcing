@@ -1,10 +1,9 @@
 <template>
-	<div v-if="!user"> 
-		<!-- temp implementation -->
-		<h1>Loading...</h1> 
+	<div class="h-100 d-flex justify-content-center align-items-center" v-if="!user"> 
+		<b-spinner variant="success"></b-spinner>
 	</div>
     <div class="px-md-4 pt-4 main-div" v-else>
-		<!-- Completed Survey -->
+		<!-- Completed View -->
         <div v-if="completed" class="col-lg-10 mx-auto">
             <b-card class="form-card p-4 text-center">
                 <h3 class="display-5 fw-bold mb-4">Thank you!</h3>
@@ -62,18 +61,12 @@
                             d-flex
                             justify-content-between
                             align-items-center
-                            flex-wrap
-                        "
-                    >
+                            flex-wrap">
                         <h3 class="fw-bold">
                             How does this painting make you feel?
                         </h3>
-                        <span v-if="points"
-                            >You currently have {{ points }} points</span
-                        >
-                        <span v-else class="text-muted"
-                            >Getting your points...</span
-                        >
+                        <span v-if="points">You currently have {{ points }} points</span>
+                        <span v-else class="text-muted">Getting your points...</span>
                     </div>
                     <b-row>
                         <b-col
@@ -188,6 +181,7 @@
     </div>
 </template>
 <script>
+import VueCookies from 'vue-cookies'
 import firebase from "firebase/app";
 import { usersCollection, responsesCollection } from "@/firebase";
 
@@ -197,24 +191,32 @@ export default {
         this.tutImg = require("../../public/sample.png");
     },
     mounted() {
-		console.log("user:", this.user)
-		// Log in anonymously with firebase
-		firebase.auth().signInAnonymously()
+		// retrieve user from either cookies or firebase
 		firebase.auth().onAuthStateChanged(async user => {
-			if (user) {
+			if (user) { // Firebase gets uid from localStorage when w/in the same session
 				console.log(user.uid)
 				this.user = user.uid
+				// try retrieving the user from firebase
+				usersCollection.doc(user.uid).get()
+					.then(user => {
+						if (!user.exists) { // create a new user if no user exists
+							// usersCollection.doc(user.uid).set({
+							// 	points: 0,
+							// 	paintingsAnnotated: []
+							// })	
+						}
+					})
+				
 				await this.fetchImages();
 				// this.fetchFormInfo();
-				this.loggedIn = true
-			} else {
+			} else { // New session: sign in anonymously
 				console.error('No user. User is ', user)
+				firebase.auth().signInAnonymously()
 			}
 		});
     },
     data() {
         return {
-			loggedIn: false,
             user: null,
             loaded: false,
             userAnnotated: [],
@@ -300,7 +302,6 @@ export default {
                     url = urlPrefix + `${imgPath}.jpg`;
                 } while (this.userAnnotated.includes(img));
                 this.imageList.push({ url, img });
-                console.log(this.imageList);
             }
         },
         async fetchFormInfo() {

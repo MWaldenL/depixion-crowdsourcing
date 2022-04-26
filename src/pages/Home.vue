@@ -18,7 +18,6 @@ export default {
     name: "Home",
     methods: {
         enterSurvey() {
-			console.log("entering survey")
 			this.$router.push("/survey");	
 		},
         setUser(user) {
