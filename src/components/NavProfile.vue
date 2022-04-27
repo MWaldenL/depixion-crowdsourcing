@@ -153,14 +153,12 @@ export default {
 </script>
 
 <style scoped>
+
+
 #nav,
 #nav-sm {
     /* background-color: #DEDEDE; */
     /* color: #e6e6e6; */
-}
-
-.nav-sm-title {
-    color: #e6e6e6;
 }
 
 .nav-btn,

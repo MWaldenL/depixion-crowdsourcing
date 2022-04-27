@@ -47,9 +47,23 @@ export default {
 </script>
 
 <style>
+@font-face {
+	font-family: WorkSans;
+	src: url("../public/worksans.ttf") format('truetype')
+}
+
+* {
+	font-family: WorkSans;
+}
+
+h1 {
+	font-weight: ;
+}
+
 html, body, #app {
   height: 100%;
   background-color: #F3F3F3;
   color: #333333;
 }
+
 </style>
