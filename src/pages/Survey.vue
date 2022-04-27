@@ -56,7 +56,7 @@
         </div>
 		<!-- Survey Form -->
         <div v-else class="col-lg-10 mx-auto">
-            <b-card class="p-lg-2">
+            <b-card class="p-lg-4">
                 <b-container>
                     <div
                         class="
@@ -75,7 +75,7 @@
                             lg="6"
                             sm="12"
                         >
-                            <div v-show="isLoaded">
+                            <div class="form-img-container" v-show="isLoaded">
                                 <b-img
                                     @load="onLoaded"
                                     class="form-img mx-auto"
@@ -89,10 +89,7 @@
                                 class="loading-wrapper mx-auto flex-column"
                                 v-show="!isLoaded"
                             >
-                                <font-awesome-icon
-                                    class="mb-2"
-                                    :icon="['fas', 'spinner']"
-                                />
+		                        <b-spinner class="mb-2" variant="success"></b-spinner>
                                 <span class="text-muted">Loading image...</span>
                             </div>
                         </b-col>
@@ -375,9 +372,13 @@ export default {
     border-radius: 8px;
 }
 
+.form-img-container {
+    height: 500px;
+}
+
 .form-img {
     border-radius: 8px;
-    /* object-fit: contain; */
+    height: 100%;
     max-height: 70vh;
     object-fit: contain;
 }
@@ -390,7 +391,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 60vh;
 }
 
 .button-submit {

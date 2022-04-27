@@ -23,10 +23,14 @@
 
 		<b-button-toolbar>
 			<b-button-group class="mx-1">
-				<b-button v-b-modal.us-modal variant="link">About the Study</b-button>
-				<b-button v-b-modal.dp-modal variant="link">Data Privacy</b-button>
+				<b-button class="nav-btn" v-b-modal.us-modal variant="link">About the Study</b-button>
+				<b-button class="nav-btn" v-b-modal.dp-modal variant="link">Data Privacy</b-button>
 				<!-- <b-button @click="logout" variant="danger" class="mx-1">Logout</b-button> -->
 			</b-button-group>
+		<!-- <b-navbar-nav class="d-flex">
+			<b-nav-item v-b-modal.dp-modal>About the Study</b-nav-item>
+			<b-nav-item v-b-modal.dp-modal>Data Privacy</b-nav-item>
+		</b-navbar-nav> -->
 		</b-button-toolbar>
 
 		<!-- Data Privacy -->
@@ -157,6 +161,12 @@ export default {
 
 .nav-sm-title {
     color: #e6e6e6;
+}
+
+.nav-btn,
+.nav-btn:hover {
+	color: #424242;
+	text-decoration: none;
 }
 
 #nav-title:hover {
