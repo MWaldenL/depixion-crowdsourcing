@@ -33,12 +33,13 @@ const router = new VueRouter({
 router.beforeEach(async (to, from, next) => {
 	const valid = ['Home', 'Survey', 'Preliminary']
 	const user = await firebase.getCurrentUser()
+	console.log(user)
 	if (to.name === 'Preliminary' || to.name === 'Survey') {
 		next()
 	} else if (to.name === 'Home' || !valid.includes(to.name)) {
 		if (user)
 			next({ path: '/survey' })
-		else next({ path: '/' })
+		else next()
 	} else {
 		next()
 	}

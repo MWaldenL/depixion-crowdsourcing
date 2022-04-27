@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { auth, responsesCollection } from "@/firebase";
+import { responsesCollection } from "@/firebase";
 import Primer from "@/components/Primer";
 
 export default {
@@ -25,7 +25,8 @@ export default {
 
     created() {
         document.title = "DepiXion | Login";
-        auth.onAuthStateChanged((user) => {
+        firebase.auth().onAuthStateChanged((user) => {
+            console.log(user)
             this.setUser(user);
         });
     },

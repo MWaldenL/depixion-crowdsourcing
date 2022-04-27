@@ -191,11 +191,10 @@ export default {
         this.tutImg = require("../../public/sample.png");
     },
     mounted() {
-        // test: check cookie value
-        console.log("show primer? ", this.$cookies.get("showTutorial"))
+        // Retrieve user option to show/hide tutorial from cookies
         this.tutored = Boolean(this.$cookies.get("showTutorial"))
 
-		// retrieve user from either localStorage or firebase
+		// Listen for user state changes
 		firebase.auth().onAuthStateChanged(async user => {
 			if (user) { // Firebase gets uid from localStorage when w/in the same session
                 console.log("Auth state changed: uid is", user.uid)
@@ -247,7 +246,7 @@ export default {
     watch: {
         dontShowTutorial(oldVal, newVal) {
             if (newVal != oldVal) {
-                this.$cookies.set("showTutorial", newVal) // save this choice
+                this.$cookies.set("showTutorial", newVal) // save this choice to cookies
             }
         }
     },
