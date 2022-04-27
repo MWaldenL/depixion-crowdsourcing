@@ -1,4 +1,5 @@
 <template>
+    <!-- Show loading screen if no user -->
 	<div class="h-100 d-flex justify-content-center align-items-center" v-if="!user"> 
 		<b-spinner variant="success"></b-spinner>
 	</div>
@@ -22,9 +23,7 @@
         </div>
 		<!-- Tutorial View -->
         <div v-else-if="!tutored" class="col-lg-10 mx-auto">
-            <b-card
-                class="p-2 d-flex flex-column align-items-center text-center"
-            >
+            <b-card class="p-2 d-flex flex-column align-items-center text-center">
                 <h3 class="fw-bold mb-4">Emotion Labeling Reminders</h3>
                 <b-img class="tut-img mb-4" fluid :src="tutImg" />
                 <p class="col-lg-6 mx-auto">
@@ -39,6 +38,13 @@
                     <b>Note:</b> You cannot go back to the previous image when
                     proceeding to the next.
                 </p>
+                <b-form-checkbox
+                    v-model="dontShowTutorial"
+                    :value="true"
+                    :unchecked-value="false"
+                >   
+                    Don't show me this again.
+                </b-form-checkbox>
                 <b-button
                     class="mt-2"
                     @click="tutored = true"
@@ -185,6 +191,10 @@ export default {
         this.tutImg = require("../../public/sample.png");
     },
     mounted() {
+        // test: check cookie value
+        console.log("show primer? ", this.$cookies.get("showTutorial"))
+        this.tutored = Boolean(this.$cookies.get("showTutorial"))
+
 		// retrieve user from either localStorage or firebase
 		firebase.auth().onAuthStateChanged(async user => {
 			if (user) { // Firebase gets uid from localStorage when w/in the same session
@@ -200,10 +210,11 @@ export default {
 								paintingsAnnotated: []
 							})	
 						}
+                        // fetch images and then form info
+                        this.fetchImages().then(() => {
+                            this.fetchFormInfo();
+                        });
 					})
-
-				await this.fetchImages();
-				this.fetchFormInfo();
 			} else { // New session: sign in anonymously
                 firebase.auth().signInAnonymously()
 			}
@@ -227,10 +238,18 @@ export default {
             ],
             points: null,
             page: null,
+            dontShowTutorial: false, 
             tutored: false,
             tutImg: "",
             textColor: "text-white",
         };
+    },
+    watch: {
+        dontShowTutorial(oldVal, newVal) {
+            if (newVal != oldVal) {
+                this.$cookies.set("showTutorial", newVal) // save this choice
+            }
+        }
     },
     computed: {
         completed() {
@@ -265,7 +284,7 @@ export default {
             // Mark annotated images
             const userDoc = await usersCollection.doc(this.user).get();
             const data = userDoc.data();
-            this.userAnnotated = data.paintingsAnnotated;
+            this.userAnnotated = data.paintingsAnnotated; // FIXME: issue here
 
             // Fetch images
             this.imageList = [];
@@ -339,8 +358,7 @@ export default {
             const userRef = usersCollection.doc(this.user);
             const userPts = (await userRef.get()).data().points;
             await userRef.update({
-                paintingsAnnotated:
-                    firebase.firestore.FieldValue.arrayUnion(img),
+                paintingsAnnotated: firebase.firestore.FieldValue.arrayUnion(img),
                 points: userPts + 10,
             });
             this.points = userPts + 10;
