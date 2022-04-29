@@ -1,318 +1,407 @@
 <template>
-  <div class="px-md-4 pt-4 main-div">
-    <div v-if="completed" class="col-lg-10 mx-auto">
-      <b-card class="form-card p-4 text-center">
-        <h3 class="display-5 fw-bold mb-4">Thank you!</h3>
-        <p class="col-lg-8 mx-auto">
-          We truly appreciate your contribution to our study. If you have any questions,
-          feel free to reach out to us. Our contact details are available on the <i>About the Study</i>
-          page. If you want to contribute more and earn more points, you can click the button below 
-          and label a new set of paintings.
-        </p>
-        <p>
-          You now have <b>{{points}}</b> points.
-        </p>
-        <b-button 
-          class="mt-2"
-          @click="backToPrimer"
-          variant="success">
-          Go Back
-        </b-button>
-      </b-card>
-    </div>
-    <div v-else-if="!tutored" class="col-lg-10 mx-auto">
-      <b-card class="p-2 d-flex flex-column align-items-center text-center">
-        <h3 class="fw-bold mb-4">Emotion Labeling Reminders</h3>
-        <b-img class="tut-img mb-4" fluid :src="tutImg"/>
-        <p class="col-lg-6 mx-auto">
-          Ten different images of abstract paintings will be displayed. 
-          For each image, you will be tasked to label them based on the emotions you feel.
-          You can select one of the three levels of intensity for each emotion.
-          You can also select multiple emotions in a single painting.
-          You can remove the emotion label by clicking X.
-        </p>
-        <p class="col-lg-6 mx-auto">
-          <b>Note:</b> You cannot go back to the previous image when proceeding to the next.
-        </p>
-        <b-button 
-          class="mt-2"
-          @click="tutored = true"
-          variant="success">
-          Begin answering
-        </b-button>
-      </b-card>
-    </div>
-    <div v-else class="col-lg-10 mx-auto">
-      <b-card class="p-lg-2">
-        <b-container> 
-          <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap">
-            <h3 class="fw-bold">How does this painting make you feel?</h3>
-            <span v-if="points">You currently have {{points}} points</span>
-            <span v-else class="text-muted">Getting your points...</span>
-          </div>
-          <b-row>
-            <b-col class="mb-4 d-flex justify-content-center" lg="6" sm="12">
-              <div v-show="isLoaded">
-                <b-img 
-                  @load="onLoaded"
-                  class="form-img mx-auto" 
-                  :src="imgSrc" 
-                  fluid-grow
-                  alt="Abstract Painting" />
-                <p>Source: WikiArt</p>
-              </div>
-              <div class="loading-wrapper mx-auto flex-column" v-show="!isLoaded"> 
-                <font-awesome-icon class="mb-2" :icon="['fas','spinner']" />
-                <span class="text-muted">Loading image...</span>
-              </div>
-            </b-col>
-            <b-col class="my-auto">
-              <b-container :key="lbl.emotion" v-for="lbl in emotionLabels">
-                <div class="row mb-2 label-row align-items-center">
-                  <div class="col-md-3 col-6">
-                    <label>{{ lbl.emotion }}</label>
-                  </div>
-                  <div class="col-md-1 col-6 order-md-last d-flex justify-content-end">
-                    {{lbl.value ? lbl.value : 0}}
-                  </div>
-                  <div class="col-md-8 order-md-1">
-                    <b-form-rating  
-                      stars="3"
-                      v-model="lbl.value"
-                      icon-empty="circle"
-                      icon-full="circle-fill"
-                      color="green"
-                      no-border
-                      show-clear/>
-                  </div>
-                </div>
-              </b-container>
-              <b-container class="d-flex flex-column align-items-center my-4">
-                <b-button 
-                  class="button-submit"
-                  :class="isDisabled"
-                  @click="nextPage"
-                  variant="success">
-                  <span v-if="this.page < 10">
-                    Next
-                  </span>
-                  <span v-else>
-                    Finish
-                  </span>
+    <!-- Show loading screen if no user -->
+	<div class="h-100 d-flex justify-content-center align-items-center" v-if="!user"> 
+		<b-spinner variant="success"></b-spinner>
+	</div>
+    <div class="px-md-4 pt-4 main-div" v-else>
+		<!-- Completed View -->
+        <div v-if="completed" class="col-lg-10 mx-auto">
+            <b-card class="form-card p-4 text-center">
+                <h3 class="display-5 fw-bold mb-4">Thank you!</h3>
+                <p class="col-lg-8 mx-auto">
+                    We truly appreciate your contribution to our study. If you
+                    have any questions, feel free to reach out to us. Our
+                    contact details are available on the <i>About the Study</i>
+                    page. If you want to contribute more and earn more points,
+                    you can click the button below and label a new set of
+                    paintings.
+                </p>
+                <b-button class="mt-2" @click="startNewSurvey" variant="success">
+                    Label more paintings
                 </b-button>
-              </b-container>
-              <p class="text-center" :class="textColor">Please select at least one emotion label</p>
-            </b-col>
-          </b-row>
-        </b-container>
-        <div class="container d-flex justify-content-between align-items-end">
-          <div class="col mr-4">
-            <b-progress :value="page" :max="10" show-value class="mr-3" variant="success"></b-progress>
-          </div>
+            </b-card>
         </div>
-      </b-card>
+		<!-- Tutorial View -->
+        <div v-else-if="!tutored" class="col-lg-10 mx-auto">
+            <b-card class="p-2 d-flex flex-column align-items-center text-center">
+                <h3 class="fw-bold mb-4">Emotion Labeling Reminders</h3>
+                <b-img class="tut-img mb-4" fluid :src="tutImg" />
+                <p class="col-lg-6 mx-auto">
+                    Ten different images of abstract paintings will be
+                    displayed. For each image, you will be tasked to label them
+                    based on the emotions you feel. You can select one of the
+                    three levels of intensity for each emotion. You can also
+                    select multiple emotions in a single painting. You can
+                    remove the emotion label by clicking X.
+                </p>
+                <p class="col-lg-6 mx-auto">
+                    <b>Note:</b> You cannot go back to the previous image when
+                    proceeding to the next.
+                </p>
+                <b-form-checkbox
+                    v-model="dontShowTutorial"
+                    :value="true"
+                    :unchecked-value="false"
+                >   
+                    Don't show me this again.
+                </b-form-checkbox>
+                <b-button
+                    class="mt-2"
+                    @click="tutored = true"
+                    variant="success"
+                >
+                    Begin answering
+                </b-button>
+            </b-card>
+        </div>
+		<!-- Survey Form -->
+        <div v-else class="col-lg-10 mx-auto">
+            <b-card class="p-lg-4">
+                <b-container>
+                    <div
+                        class="
+                            mb-4
+                            d-flex
+                            justify-content-between
+                            align-items-center
+                            flex-wrap">
+                        <h3 class="fw-bold">
+                            How does this painting make you feel?
+                        </h3>
+                    </div>
+                    <b-row>
+                        <b-col
+                            class="mb-4 d-flex justify-content-center"
+                            lg="6"
+                            sm="12"
+                        >
+                            <div class="form-img-container" v-show="isLoaded">
+                                <b-img
+                                    @load="onLoaded"
+                                    class="form-img mx-auto"
+                                    :src="imgSrc"
+                                    fluid-grow
+                                    alt="Abstract Painting"
+                                />
+                                <p>Source: WikiArt</p>
+                            </div>
+                            <div
+                                class="loading-wrapper mx-auto flex-column"
+                                v-show="!isLoaded"
+                            >
+		                        <b-spinner class="mb-2" variant="success"></b-spinner>
+                                <span class="text-muted">Loading image...</span>
+                            </div>
+                        </b-col>
+                        <b-col class="my-auto">
+                            <b-container
+                                :key="lbl.emotion"
+                                v-for="lbl in emotionLabels"
+                            >
+                                <div
+                                    class="
+                                        row
+                                        mb-2
+                                        label-row
+                                        align-items-center
+                                    "
+                                >
+                                    <div class="col-md-3 col-6">
+                                        <label>{{ lbl.emotion }}</label>
+                                    </div>
+                                    <div
+                                        class="
+                                            col-md-1 col-6
+                                            order-md-last
+                                            d-flex
+                                            justify-content-end
+                                        "
+                                    >
+                                        {{ lbl.value ? lbl.value : 0 }}
+                                    </div>
+                                    <div class="col-md-8 order-md-1">
+                                        <b-form-rating
+                                            stars="3"
+                                            v-model="lbl.value"
+                                            icon-empty="circle"
+                                            icon-full="circle-fill"
+                                            color="green"
+                                            no-border
+                                            show-clear
+                                        />
+                                    </div>
+                                </div>
+                            </b-container>
+                            <b-container
+                                class="
+                                    d-flex
+                                    flex-column
+                                    align-items-center
+                                    my-4
+                                "
+                            >
+                                <b-button
+                                    class="button-submit"
+                                    :class="isDisabled"
+                                    @click="nextPage"
+                                    variant="success"
+                                >
+                                    <span v-if="this.page < 10"> Next </span>
+                                    <span v-else> Finish </span>
+                                </b-button>
+                            </b-container>
+                            <p class="text-center" :class="textColor">
+                                Please select at least one emotion label
+                            </p>
+                        </b-col>
+                    </b-row>
+                </b-container>
+                <div
+                    class="
+                        container
+                        d-flex
+                        justify-content-between
+                        align-items-end
+                    "
+                >
+                    <div class="col mr-4">
+                        <b-progress
+                            :value="page"
+                            :max="10"
+                            show-value
+                            class="mr-3"
+                            variant="success"
+                        ></b-progress>
+                    </div>
+                </div>
+            </b-card>
+        </div>
     </div>
-  </div>
 </template>
 <script>
-import firebase from "firebase/app"
-import { auth, usersCollection, responsesCollection } from '@/firebase'
+import firebase from "firebase/app";
+import { usersCollection, responsesCollection } from "@/firebase";
 
 export default {
-  created() {
-    document.title = "DepiXion | Survey"
-    this.tutImg = require("../../public/sample.png")
-  },
-  mounted() {
-    auth.onAuthStateChanged(async user => {
-      console.log('auth state changed called')
-      this.user = user.uid
-      await this.fetchImages()
-      this.fetchFormInfo()
-      usersCollection
-        .doc(this.user)
-        .get()
-        .then(user => {
-          if (!user.empty) 
-            if (!user.data().preliminary)
-              this.$router.push('/prelim')
-        })
-    })
+    created() {
+        document.title = "DepiXion | Survey";
+        this.tutImg = require("../../public/sample.png");
+    },
+    mounted() {
+        // Retrieve user option to show/hide tutorial from cookies
+        this.tutored = Boolean(this.$cookies.get("showTutorial"))
 
+		// Listen for user state changes
+		firebase.auth().onAuthStateChanged(async user => {
+			if (user) { // Firebase gets uid from localStorage when w/in the same session
+                console.log("Auth state changed: uid is", user.uid)
+				this.user = user.uid
 
-  }, 
-  data() {
-    return {
-      user: null,
-      loaded: false,
-      userAnnotated: [],
-      imageList: [],
-      emotionLabels: [
-        {emotion: "Joy", value: 0},
-        {emotion: "Trust", value: 0},
-        {emotion: "Fear", value: 0},
-        {emotion: "Surprise", value: 0},
-        {emotion: "Sadness", value: 0},
-        {emotion: "Disgust", value: 0},
-        {emotion: "Anger", value: 0},
-        {emotion: "Anticipation", value: 0},
-      ],
-      points: null,
-      page: null,
-      tutored: false,
-      tutImg: "",
-      textColor: "text-white"
-    }
-  },
-  computed: {
-    completed() {
-      return this.page == 11
+				// try retrieving the user from firebase
+				usersCollection.doc(user.uid).get()
+					.then(doc => {
+						if (!doc.exists) { // create a new user if no user exists
+							usersCollection.doc(this.user).set({
+								points: 0,
+								paintingsAnnotated: []
+							})	
+						}
+                        // fetch images and then form info
+                        this.fetchImages().then(() => {
+                            this.fetchFormInfo();
+                        });
+					})
+			} else { // New session: sign in anonymously
+                firebase.auth().signInAnonymously()
+			}
+		});
     },
-    imgSrc() {
-      return this.imageList[this.page-1] ? this.imageList[this.page-1].url : ''
+    data() {
+        return {
+            user: null,
+            loaded: false,
+            userAnnotated: [],
+            imageList: [],
+            emotionLabels: [
+                { emotion: "Joy", value: 0 },
+                { emotion: "Trust", value: 0 },
+                { emotion: "Fear", value: 0 },
+                { emotion: "Surprise", value: 0 },
+                { emotion: "Sadness", value: 0 },
+                { emotion: "Disgust", value: 0 },
+                { emotion: "Anger", value: 0 },
+                { emotion: "Anticipation", value: 0 },
+            ],
+            points: null,
+            page: null,
+            dontShowTutorial: false, 
+            tutored: false,
+            tutImg: "",
+            textColor: "text-white",
+        };
     },
-    isLoaded() {
-      return this.imageList[this.page-1] && this.loaded
-    },
-    isDisabled() {
-      return {
-        disabled: !this.loaded  
-      }
-    },
-  },
-  methods: {
-    onSubmit(e) {
-      e.preventDefault()
-    },
-    onLoaded() {
-      this.loaded = true
-    },
-    backToPrimer() {
-      // add annotated images to vue
-      this.$router.push('/prelim')
-    },
-    async fetchImages() {
-      // Mark annotated images 
-      const userDoc = await usersCollection.doc(this.user).get()
-      const data = userDoc.data()
-      this.userAnnotated = data.paintingsAnnotated
-
-      // Fetch images
-      this.imageList = []
-      // const list = await this.storageRef.child('images').listAll()
-      const pool1 = await fetch("https://res.cloudinary.com/kbadulis/image/list/pool.json")
-      const sublist1 = await pool1.json()
-      const pool2 = await fetch("https://res.cloudinary.com/kbadulis/image/list/pool-two.json")
-      const sublist2 = await pool2.json()
-      const list = sublist1.resources.concat(sublist2.resources)
-
-      console.log(list)
-      
-      const urlPrefix = "https://res.cloudinary.com/kbadulis/image/upload/v1628054226/images/"
-
-      for (let i=0; i < 10; i++) {
-        let rand, img, url, imgPath, imgnojpg
-        do { // keep fetching while the selected image has been annotated
-          rand = Math.floor(Math.random()*list.length) // random index
-          imgPath = list[rand].public_id.split('/')[1]
-          img = imgPath.split('_')[0] + '.jpg'
-          imgnojpg = imgPath.split('_')[0]
-          url = urlPrefix + `${imgPath}.jpg`
-        } while (this.userAnnotated.includes(img)) 
-        this.imageList.push({url, img})
-        console.log(this.imageList)
-      }
-    },
-    async fetchFormInfo() {
-      const userRef = usersCollection.doc(this.user)
-      // display current points
-      await userRef.get().then(user => this.points = user.data().points)
-      // get last saved page
-      this.page = this.points / 10 % 10 + 1
-    },
-    async nextPage() {
-      // Save image to firebase
-      const answered = this.emotionLabels.some(label => label.value > 0)
-      if (answered) {
-        let currentImage = this.imageList[this.page-1].img
-        await this.saveResponse(currentImage) // note: await required
-        await this.writeImageToUser(currentImage)
-
-        // Next page
-        if (this.loaded) {
-          this.page++
+    watch: {
+        dontShowTutorial(oldVal, newVal) {
+            if (newVal != oldVal) {
+                this.$cookies.set("showTutorial", newVal) // save this choice to cookies
+            }
         }
-        this.loaded = false
-        this.textColor = "text-white"
-
-        // Reset ratings form
-        this.emotionLabels.map(_ => _.value = 0)
-
-        // Scroll to top
-        window.scrollTo(0,0);
-      } else {
-        this.textColor = "text-danger"
-      }
     },
-    async saveResponse(img) {
-      const user = await usersCollection.doc(this.user).get()
-      const email = user.data().email
-      const data = {
-        user: email,
-        painting: img,
-        labels: this.emotionLabels
-      }
-      await responsesCollection.doc().set(data)
+    computed: {
+        completed() {
+            return this.page == 11;
+        },
+        imgSrc() {
+            return this.imageList[this.page - 1]
+                ? this.imageList[this.page - 1].url
+                : "";
+        },
+        isLoaded() {
+            return this.imageList[this.page - 1] && this.loaded;
+        },
+        isDisabled() {
+            return {
+                disabled: !this.loaded,
+            };
+        },
     },
-    async writeImageToUser(img) {
-      const userRef = usersCollection.doc(this.user)
-      const userPts = (await userRef.get()).data().points
-      await userRef.update({
-        paintingsAnnotated: firebase.firestore.FieldValue.arrayUnion(img),
-        points: userPts + 10
-      })
-      this.points = userPts + 10
-    }
-  }
-}
+    methods: {
+        onSubmit(e) {
+            e.preventDefault();
+        },
+        onLoaded() {
+            this.loaded = true;
+        },
+        startNewSurvey() {
+            this.page = 0
+        },
+        async fetchImages() {
+            // Mark annotated images
+            const userDoc = await usersCollection.doc(this.user).get();
+            const data = userDoc.data();
+            this.userAnnotated = data.paintingsAnnotated; // FIXME: issue here
+
+            // Fetch images
+            this.imageList = [];
+            const pool1 = await fetch(
+                "https://res.cloudinary.com/kbadulis/image/list/pool.json"
+            );
+            const sublist1 = await pool1.json();
+            const pool2 = await fetch(
+                "https://res.cloudinary.com/kbadulis/image/list/pool-two.json"
+            );
+            const sublist2 = await pool2.json();
+            const list = sublist1.resources.concat(sublist2.resources);
+            const urlPrefix =
+                "https://res.cloudinary.com/kbadulis/image/upload/v1628054226/images/";
+
+            // Select images for the user
+            for (let i=0; i < 10; i++) {
+                let rand, img, url, imgPath
+                do { // keep fetching while the selected image has already been annotated
+                    rand = Math.floor(Math.random() * list.length); // random index
+                    imgPath = list[rand].public_id.split("/")[1];
+                    img = `${imgPath.split("_")[0]}.jpg`
+                    url = `${urlPrefix}${imgPath}.jpg`;
+                } while (this.userAnnotated.includes(img));
+                this.imageList.push({ url, img });
+            }
+        },
+        async fetchFormInfo() {
+            const userRef = usersCollection.doc(this.user);
+            // display current points
+            await userRef
+                .get()
+                .then((user) => (this.points = user.data().points));
+            // get last saved page
+            this.page = ((this.points / 10) % 10) + 1;
+        },
+        async nextPage() {
+            // Save image to firebase
+            const answered = this.emotionLabels.some(
+                (label) => label.value > 0
+            );
+            if (answered) {
+                let currentImage = this.imageList[this.page - 1].img;
+                await this.saveResponse(currentImage)
+                await this.writeImageToUser(currentImage)
+
+                // Next page
+                if (this.loaded) {
+                    this.page++;
+                }
+                this.loaded = false;
+                this.textColor = "text-white";
+
+                // Reset ratings form
+                this.emotionLabels.map((_) => (_.value = 0));
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+            } else {
+                this.textColor = "text-danger";
+            }
+        },
+        async saveResponse(img) { 
+            await responsesCollection.doc().set({
+                user: this.user,
+                painting: img,
+                labels: this.emotionLabels,
+            });
+        },
+        async writeImageToUser(img) {
+            const userRef = usersCollection.doc(this.user);
+            const userPts = (await userRef.get()).data().points;
+            await userRef.update({
+                paintingsAnnotated: firebase.firestore.FieldValue.arrayUnion(img),
+                points: userPts + 10,
+            });
+            this.points = userPts + 10;
+        },
+    },
+};
 </script>
 
 <style scoped>
-
 .label-row {
-  padding: 0.5rem;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #d9d9d9;
-  border-radius: 8px;
+    padding: 0.5rem;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #d9d9d9;
+    border-radius: 8px;
+}
+
+.form-img-container {
+    height: 500px;
 }
 
 .form-img {
-  border-radius: 8px;
-  /* object-fit: contain; */
-  max-height: 70vh;
-  object-fit: contain; 
+    border-radius: 8px;
+    height: 100%;
+    max-height: 70vh;
+    object-fit: contain;
 }
 
 .tut-img {
-  max-height: 50vh;
+    max-height: 50vh;
 }
 
 .loading-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .button-submit {
-  width: 50%;
+    width: 50%;
 }
 
 @keyframes spinner {
-  to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 .fa-spinner {
-  animation: spinner 1s linear infinite;
+    animation: spinner 1s linear infinite;
 }
 </style>
