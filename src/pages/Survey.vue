@@ -16,8 +16,8 @@
                     you can click the button below and label a new set of
                     paintings.
                 </p>
-                <b-button class="mt-2" @click="backToPrimer" variant="success">
-                    Go Back
+                <b-button class="mt-2" @click="startNewSurvey" variant="success">
+                    Label more paintings
                 </b-button>
             </b-card>
         </div>
@@ -272,9 +272,8 @@ export default {
         onLoaded() {
             this.loaded = true;
         },
-        backToPrimer() {
-            // add annotated images to vue
-            this.$router.push("/prelim");
+        startNewSurvey() {
+            this.page = 0
         },
         async fetchImages() {
             // Mark annotated images
