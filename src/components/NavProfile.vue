@@ -43,7 +43,7 @@
 			</template>
 			<h4><sub>Data Privacy Statement</sub></h4><br>
 			<p>
-				In compliance with the Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
+				In compliance with the Philippine Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
 				(IRR) effective since September 9, 2016, I am hereby giving consent to the proponents of this 
 				research to do the following:
 				<ol class="my-4">
@@ -111,15 +111,15 @@
 
 			<b>Keith Gabriel Badulis</b><br>
 			keith_gabriel_badulis@dlsu.edu.ph<br>
-			09453455191<br><br>
+			+63 (945) 3455191<br><br>
 
 			<b>Matthew Walden Lua</b><br>
 			matthew_walden_lua@dlsu.edu.ph<br>
-			09175832136<br><br>
+			+63 (917) 5832136<br><br>
 
 			<b>Byron Ethelbert Nill</b><br>
 			byron_ethelbert_nill@dlsu.edu.ph<br>
-			09399363044<br><br>
+			+63 (939) 9363044<br><br>
 
 			Thank you very much for your interest in our study!
 			</p>
@@ -153,13 +153,6 @@ export default {
 </script>
 
 <style scoped>
-
-
-#nav,
-#nav-sm {
-    /* background-color: #DEDEDE; */
-    /* color: #e6e6e6; */
-}
 
 .nav-btn,
 .nav-btn:hover {

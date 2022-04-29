@@ -13,7 +13,9 @@
 		Hello! <br><br>
 
 		We are Keith Gabriel Badulis, Matthew Walden Lua, and Byron Ethelbert Nill, ID 118 Students from the 
-		College of Computer Studies taking up BS Computer Science with specializations in Software Technology. 
+		College of Computer Studies of De La Salle University - Manila taking up BS Computer Science with 
+		specializations in Software Technology. 
+
 		We are currently working on our thesis project entitled "Generating Abstract Art Based on a User-Specified 
 		Emotion Spectrum". Our goal is to build a software that can create abstract paintings through emotions, 
 		and we need your help! <br><br>
@@ -26,18 +28,17 @@
 
 		<b>Keith Gabriel Badulis</b><br>
 		keith_gabriel_badulis@dlsu.edu.ph<br>
-		09453455191<br><br>
+		+63 (945) 3455191<br><br>
 
 		<b>Matthew Walden Lua</b><br>
 		matthew_walden_lua@dlsu.edu.ph<br>
-		09175832136<br><br>
+		+63 (917) 5832136<br><br>
 
 		<b>Byron Ethelbert Nill</b><br>
 		byron_ethelbert_nill@dlsu.edu.ph<br>
-		09399363044<br><br>
+		+63 (939) 9363044<br><br>
 
-		Thank you very much for your interest in our study! Please click the link below to login with your Google Account 
-		and proceed with the survey.
+		Thank you very much for your interest in our study! Please click the button below to proceed with the survey.
 		</p>
 
 		<!-- <img src="@/../public/login.png" @click="login" id="login" class="d-block mx-auto mt-5 w-50"> -->
@@ -47,11 +48,14 @@
 		
 		<br>
 		<small :style="{ color: color }">
-		<b>Why do I need to sign in?</b>
-		Our survey will require each respondent to label 10 unique images from a pool of 2000 abstract paintings. We use email addresses 
-		to ensure that each image you label will be unique regardless of how many times you answer our survey. 
+			<p>Notice: </p>
+			
+			This website utilizes cookies to take note of the paintings that you have already evaluated. Should you wish to evaluate more paintings,
+			you may enter this website again and proceed with the survey.
+			
+			<hr>
 
-		For more information, you can view our data privacy statement <a href="#" :style="{ color: color }" v-b-modal.dp-modal>here</a>.
+			For more information, you can view our data privacy statement <a href="#" :style="{ color: color }" v-b-modal.dp-modal>here</a>.
 		</small>
 		<b-modal id="dp-modal" size="xl" centered hide-header-close ok-only>
 		<template #modal-header>
@@ -62,9 +66,9 @@
 		</template>
 		<h4><sub>Data Privacy Statement</sub></h4><br>
 		<p>
-			In compliance with the Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
-			(IRR) effective since September 9, 2016, I am hereby giving consent to the proponents of this 
-			research to do the following:
+			In compliance with the Philippine Data Privacy Act (DPA) of 2012, and its Implementing Rules 
+			and Regulations (IRR) effective since September 9, 2016, I am hereby giving consent to the 
+			proponents of this research to do the following:
 			<ol class="my-4">
 				<li>
 				Collection of my personal data which includes, but is not limited to, my name, contact number, 

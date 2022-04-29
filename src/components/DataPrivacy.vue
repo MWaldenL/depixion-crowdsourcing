@@ -5,7 +5,7 @@
     </div>
     <div>
       <p class="mx-4 text-start">
-        In compliance with the Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
+        In compliance with the Philippine Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
         (IRR) effective since September 9, 2016, I, {{ name }}, am hereby giving consent to the proponents of this 
         research to do the following:
         <ol class="my-4">

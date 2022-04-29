@@ -37,6 +37,7 @@ const auth = firebase.auth()
 const usersCollection = db.collection('users')
 const paintingsCollection = db.collection('paintings')
 const responsesCollection = db.collection('responses')
+const evaluationsCollection = db.collection('evaluations')
 
 export {
 	db,
@@ -44,4 +45,5 @@ export {
 	usersCollection,
 	paintingsCollection,
 	responsesCollection,
+	evaluationsCollection
 } 

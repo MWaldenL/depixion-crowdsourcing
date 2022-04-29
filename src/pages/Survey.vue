@@ -72,7 +72,7 @@
                     <b-row>
                         <b-col
                             class="mb-4 d-flex justify-content-center"
-                            lg="6"
+                            lg="9"
                             sm="12"
                         >
                             <div class="form-img-container" v-show="isLoaded">
@@ -117,10 +117,18 @@
                                             justify-content-end
                                         "
                                     >
-                                        {{ lbl.value ? lbl.value : 0 }}
+                                        {{ lbl.value }}
                                     </div>
-                                    <div class="col-md-8 order-md-1">
-                                        <b-form-rating
+                                    <div 
+                                        class="
+                                            col-md-8
+                                            order-md-1
+                                            d-flex
+                                            flex-column
+                                            align-items-center
+                                        "
+                                    >
+                                        <!-- <b-form-rating
                                             stars="3"
                                             v-model="lbl.value"
                                             icon-empty="circle"
@@ -128,8 +136,18 @@
                                             color="green"
                                             no-border
                                             show-clear
-                                        />
-                                    </div>
+                                        /> -->
+                                        <b-form-checkbox 
+                                            v-model="lbl.value"
+                                            value="1"
+                                            unchecked-value="0"
+                                            size="lg"
+                                            color="green"
+                                        >
+                                        <!-- TODO -->
+                                        <!-- I <span v-if="lbl.value === '1'">don't</span> feel {{ lbl.emotion }} -->
+                                        </b-form-checkbox>
+                                    </div> 
                                 </div>
                             </b-container>
                             <b-container
@@ -156,6 +174,7 @@
                         </b-col>
                     </b-row>
                 </b-container>
+                <br>
                 <div
                     class="
                         container
@@ -180,7 +199,7 @@
 </template>
 <script>
 import firebase from "firebase/app";
-import { usersCollection, responsesCollection } from "@/firebase";
+import { usersCollection, responsesCollection, evaluationsCollection } from "@/firebase";
 
 export default {
     created() {
@@ -281,7 +300,7 @@ export default {
             const data = userDoc.data();
             this.userAnnotated = data.paintingsAnnotated; // FIXME: issue here
 
-            // Fetch images
+            // Fetch images TODO
             this.imageList = [];
             const pool1 = await fetch(
                 "https://res.cloudinary.com/kbadulis/image/list/pool.json"
@@ -343,7 +362,7 @@ export default {
             }
         },
         async saveResponse(img) { 
-            await responsesCollection.doc().set({
+            await evaluationsCollection.doc().set({
                 user: this.user,
                 painting: img,
                 labels: this.emotionLabels,
@@ -372,7 +391,7 @@ export default {
 }
 
 .form-img-container {
-    height: 500px;
+    height: 700px;
 }
 
 .form-img {
