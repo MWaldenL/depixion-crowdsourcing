@@ -29,10 +29,10 @@
                 <p class="col-lg-6 mx-auto">
                     Ten different images of abstract paintings will be
                     displayed. For each image, you will be tasked to label them
-                    based on the emotions you feel. You can select one of the
-                    three levels of intensity for each emotion. You can also
-                    select multiple emotions in a single painting. You can
-                    remove the emotion label by clicking X.
+                    based on the emotions you feel. If you feel that the painting
+                    evokes that emotion in you, simply click or tap on the checkbox
+                    next to it. You can remove the label by clicking on the checkbox
+                    again.
                 </p>
                 <p class="col-lg-6 mx-auto">
                     <b>Note:</b> You cannot go back to the previous image when
