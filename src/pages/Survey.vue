@@ -361,10 +361,17 @@ export default {
             }
         },
         async saveResponse(img) { 
+            let emotions = []
+
+            for (let i = 0; i < 8; i++) {
+                let value = true ? this.emotionLabels[i].value === "1" : false
+                emotions.push({ emotion: this.emotionLabels[i].emotion, value: value })
+            }
+
             await evaluationsCollection.doc().set({
                 user: this.user,
                 painting: img,
-                labels: this.emotionLabels,
+                labels: emotions
             });
         },
         async writeImageToUser(img) {
