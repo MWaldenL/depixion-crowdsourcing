@@ -106,10 +106,10 @@
                                         align-items-center
                                     "
                                 >
-                                    <div class="col-md-3 col-6">
+                                    <div class="col-11">
                                         <label>{{ lbl.emotion }}</label>
                                     </div>
-                                    <div
+                                    <!-- <div
                                         class="
                                             col-md-1 col-6
                                             order-md-last
@@ -117,17 +117,19 @@
                                             justify-content-end
                                         "
                                     >
+                                        <span v-if="lbl.value == '0'">&#9745;</span><span v-else>&#9746;</span>
                                         {{ lbl.value }}
-                                    </div>
+                                    </div> -->
                                     <div 
                                         class="
-                                            col-md-8
+                                            col-1
                                             order-md-1
                                             d-flex
                                             flex-column
                                             align-items-center
                                         "
                                     >
+                                    
                                         <!-- <b-form-rating
                                             stars="3"
                                             v-model="lbl.value"
@@ -137,15 +139,12 @@
                                             no-border
                                             show-clear
                                         /> -->
+                                        
                                         <b-form-checkbox 
                                             v-model="lbl.value"
                                             value="1"
                                             unchecked-value="0"
-                                            size="lg"
-                                            color="green"
                                         >
-                                        <!-- TODO -->
-                                        <!-- I <span v-if="lbl.value === '1'">don't</span> feel {{ lbl.emotion }} -->
                                         </b-form-checkbox>
                                     </div> 
                                 </div>

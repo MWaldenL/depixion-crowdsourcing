@@ -106,8 +106,9 @@
 			In answering the survey in this website, you will be shown 10 abstract paintings, and you will tell us 
 			the emotions that you feel from them. You will be allowed to answer the survey again if you wish to do so. <br><br>
 
-			For any concerns or questions regarding this website or our project, in general, you may reach us through 
-			our email addresses and contact numbers below: <br><br>
+			For any concerns or questions regarding this website or our project, in general, you may reach us through
+			<a href="mailto: depixion.2022@gmail.com">depixion.2022@gmail.com</a>. <br><br>
+			<!-- our email addresses and contact numbers below: <br><br>
 
 			<b>Keith Gabriel Badulis</b><br>
 			keith_gabriel_badulis@dlsu.edu.ph<br>
@@ -119,7 +120,7 @@
 
 			<b>Byron Ethelbert Nill</b><br>
 			byron_ethelbert_nill@dlsu.edu.ph<br>
-			+63 (939) 9363044<br><br>
+			+63 (939) 9363044<br><br> -->
 
 			Thank you very much for your interest in our study!
 			</p>
