@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { auth, responsesCollection } from "@/firebase";
+import { auth, responsesCollection, evaluationsCollection } from "@/firebase";
 import Primer from "@/components/Primer";
 
 export default {
@@ -31,7 +31,7 @@ export default {
     },
 
     mounted() {
-        responsesCollection.get().then((query) => {
+        evaluationsCollection.get().then((query) => {
             let data;
             let dataAdded;
             query.forEach((doc) => {

@@ -43,7 +43,7 @@
 			</template>
 			<h4><sub>Data Privacy Statement</sub></h4><br>
 			<p>
-				In compliance with the Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
+				In compliance with the Philippine Data Privacy Act (DPA) of 2012, and its Implementing Rules and Regulations 
 				(IRR) effective since September 9, 2016, I am hereby giving consent to the proponents of this 
 				research to do the following:
 				<ol class="my-4">
@@ -97,8 +97,8 @@
 			<p>
 			Hello! <br><br>
 
-			We are Keith Gabriel Badulis, Matthew Walden Lua, and Byron Ethelbert Nill, ID 118 Students from the 
-			College of Computer Studies taking up BS Computer Science with specializations in Software Technology. 
+			We are Keith, Mats, and Byron, senior students from the 
+			College of Computer Studies of De La Salle University - Manila taking up BS Computer Science with specializations in Software Technology. 
 			We are currently working on our thesis project entitled "Generating Abstract Art Based on a User-Specified 
 			Emotion Spectrum". Our goal is to build a software that can create abstract paintings through emotions, 
 			and we need your help! <br><br>
@@ -106,21 +106,8 @@
 			In answering the survey in this website, you will be shown 10 abstract paintings, and you will tell us 
 			the emotions that you feel from them. You will be allowed to answer the survey again if you wish to do so. <br><br>
 
-			For any concerns or questions regarding this website or our project, in general, you may reach us through 
-			our email addresses and contact numbers below: <br><br>
-
-			<b>Keith Gabriel Badulis</b><br>
-			keith_gabriel_badulis@dlsu.edu.ph<br>
-			09453455191<br><br>
-
-			<b>Matthew Walden Lua</b><br>
-			matthew_walden_lua@dlsu.edu.ph<br>
-			09175832136<br><br>
-
-			<b>Byron Ethelbert Nill</b><br>
-			byron_ethelbert_nill@dlsu.edu.ph<br>
-			09399363044<br><br>
-
+			For any concerns or questions regarding this website or our project, in general, you may reach us through
+			<a href="mailto: depixion.2022@gmail.com">depixion.2022@gmail.com</a>. <br><br>
 			Thank you very much for your interest in our study!
 			</p>
 		</b-modal>
@@ -153,13 +140,6 @@ export default {
 </script>
 
 <style scoped>
-
-
-#nav,
-#nav-sm {
-    /* background-color: #DEDEDE; */
-    /* color: #e6e6e6; */
-}
 
 .nav-btn,
 .nav-btn:hover {

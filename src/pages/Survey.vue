@@ -29,10 +29,10 @@
                 <p class="col-lg-6 mx-auto">
                     Ten different images of abstract paintings will be
                     displayed. For each image, you will be tasked to label them
-                    based on the emotions you feel. You can select one of the
-                    three levels of intensity for each emotion. You can also
-                    select multiple emotions in a single painting. You can
-                    remove the emotion label by clicking X.
+                    based on the emotions you feel. If you feel that the painting
+                    evokes that emotion in you, simply click or tap on the checkbox
+                    next to it. You can remove the label by clicking on the checkbox
+                    again.
                 </p>
                 <p class="col-lg-6 mx-auto">
                     <b>Note:</b> You cannot go back to the previous image when
@@ -72,7 +72,7 @@
                     <b-row>
                         <b-col
                             class="mb-4 d-flex justify-content-center"
-                            lg="6"
+                            lg="9"
                             sm="12"
                         >
                             <div class="form-img-container" v-show="isLoaded">
@@ -106,30 +106,13 @@
                                         align-items-center
                                     "
                                 >
-                                    <div class="col-md-3 col-6">
-                                        <label>{{ lbl.emotion }}</label>
-                                    </div>
-                                    <div
-                                        class="
-                                            col-md-1 col-6
-                                            order-md-last
-                                            d-flex
-                                            justify-content-end
-                                        "
+                                    <b-form-checkbox
+                                        v-model="lbl.value"
+                                        value="1"
+                                        unchecked-value="0"
                                     >
-                                        {{ lbl.value ? lbl.value : 0 }}
-                                    </div>
-                                    <div class="col-md-8 order-md-1">
-                                        <b-form-rating
-                                            stars="3"
-                                            v-model="lbl.value"
-                                            icon-empty="circle"
-                                            icon-full="circle-fill"
-                                            color="green"
-                                            no-border
-                                            show-clear
-                                        />
-                                    </div>
+                                        <div>{{ lbl.emotion }}</div>
+                                    </b-form-checkbox>
                                 </div>
                             </b-container>
                             <b-container
@@ -156,6 +139,7 @@
                         </b-col>
                     </b-row>
                 </b-container>
+                <br>
                 <div
                     class="
                         container
@@ -180,7 +164,7 @@
 </template>
 <script>
 import firebase from "firebase/app";
-import { usersCollection, responsesCollection } from "@/firebase";
+import { usersCollection, responsesCollection, evaluationsCollection } from "@/firebase";
 
 export default {
     created() {
@@ -281,7 +265,7 @@ export default {
             const data = userDoc.data();
             this.userAnnotated = data.paintingsAnnotated; // FIXME: issue here
 
-            // Fetch images
+            // Fetch images TODO
             this.imageList = [];
             const pool1 = await fetch(
                 "https://res.cloudinary.com/kbadulis/image/list/pool.json"
@@ -343,10 +327,17 @@ export default {
             }
         },
         async saveResponse(img) { 
-            await responsesCollection.doc().set({
+            let emotions = []
+
+            for (let i = 0; i < 8; i++) {
+                let value = true ? this.emotionLabels[i].value === "1" : false
+                emotions.push({ emotion: this.emotionLabels[i].emotion, value: value })
+            }
+
+            await evaluationsCollection.doc().set({
                 user: this.user,
                 painting: img,
-                labels: this.emotionLabels,
+                labels: emotions
             });
         },
         async writeImageToUser(img) {
@@ -362,7 +353,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .label-row {
     padding: 0.5rem;
     border-style: solid;
@@ -371,8 +362,12 @@ export default {
     border-radius: 8px;
 }
 
+label.custom-control-label {
+    margin-left: 8px !important;
+}
+
 .form-img-container {
-    height: 500px;
+    height: 700px;
 }
 
 .form-img {
