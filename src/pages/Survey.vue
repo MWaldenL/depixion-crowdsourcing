@@ -367,13 +367,14 @@ label.custom-control-label {
 }
 
 .form-img-container {
-    height: 700px;
+    max-height: 500px;
+    width: 100%;
 }
 
 .form-img {
     border-radius: 8px;
     height: 100%;
-    max-height: 70vh;
+    max-height: 100%;
     object-fit: contain;
 }
 

@@ -56,10 +56,6 @@ export default {
 	font-family: WorkSans;
 }
 
-h1 {
-	font-weight: ;
-}
-
 html, body, #app {
   height: 100%;
   background-color: #F3F3F3;

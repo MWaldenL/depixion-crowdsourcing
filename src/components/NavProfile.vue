@@ -1,9 +1,9 @@
 <template>
 <div>
 	<b-navbar class="d-sm-none p-3" toggleable="lg" id="nav-sm">
-		<b-navbar-brand href="/prelim">
+		<!-- <b-navbar-brand href="/prelim">
 			<h2 class="nav-sm-title"><b>DepiXion</b></h2>
-		</b-navbar-brand>
+		</b-navbar-brand> -->
 
 		<b-navbar-toggle target="nav-collapse" class="nav-sm-title"></b-navbar-toggle>
 
@@ -25,16 +25,11 @@
 			<b-button-group class="mx-1">
 				<b-button class="nav-btn" v-b-modal.us-modal variant="link">About the Study</b-button>
 				<b-button class="nav-btn" v-b-modal.dp-modal variant="link">Data Privacy</b-button>
-				<!-- <b-button @click="logout" variant="danger" class="mx-1">Logout</b-button> -->
 			</b-button-group>
-		<!-- <b-navbar-nav class="d-flex">
-			<b-nav-item v-b-modal.dp-modal>About the Study</b-nav-item>
-			<b-nav-item v-b-modal.dp-modal>Data Privacy</b-nav-item>
-		</b-navbar-nav> -->
 		</b-button-toolbar>
 
 		<!-- Data Privacy -->
-		<b-modal id="dp-modal" size="xl" centered hide-header-close ok-only>
+		<b-modal id="dp-modal" size="xl" centered hide-header-close ok-only ok-variant="success">
 			<template #modal-header>
 			<div>
 				<h2><b>DepiXion</b></h2>
@@ -86,7 +81,7 @@
 		</b-modal>
 
 		<!-- About the study -->
-		<b-modal id="us-modal" size="xl" title="DepiXion" centered hide-header-close ok-only>
+		<b-modal id="us-modal" size="xl" title="DepiXion" centered hide-header-close ok-only ok-variant="success">
 			<template #modal-header>
 			<div>
 				<h2><b>DepiXion</b></h2>
@@ -117,10 +112,10 @@
 
 <script>
 import { auth } from "@/firebase";
+import { about } from "@/strings"
 
 export default {
     name: "NavProfile",
-
     methods: {
         logout() {
             auth.signOut()
@@ -140,7 +135,6 @@ export default {
 </script>
 
 <style scoped>
-
 .nav-btn,
 .nav-btn:hover {
 	color: #424242;
