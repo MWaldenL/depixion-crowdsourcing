@@ -57,9 +57,8 @@ export default {
 }
 
 html, body, #app {
-  height: 100%;
-  background-color: #F3F3F3;
-  color: #333333;
+  	height: 100%;
+  	background-color: #F3F3F3;
+  	color: #333333;
 }
-
 </style>
