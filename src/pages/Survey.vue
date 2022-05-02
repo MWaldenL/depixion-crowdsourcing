@@ -106,47 +106,13 @@
                                         align-items-center
                                     "
                                 >
-                                    <div class="col-11">
-                                        <label>{{ lbl.emotion }}</label>
-                                    </div>
-                                    <!-- <div
-                                        class="
-                                            col-md-1 col-6
-                                            order-md-last
-                                            d-flex
-                                            justify-content-end
-                                        "
+                                    <b-form-checkbox
+                                        v-model="lbl.value"
+                                        value="1"
+                                        unchecked-value="0"
                                     >
-                                        <span v-if="lbl.value == '0'">&#9745;</span><span v-else>&#9746;</span>
-                                        {{ lbl.value }}
-                                    </div> -->
-                                    <div 
-                                        class="
-                                            col-1
-                                            order-md-1
-                                            d-flex
-                                            flex-column
-                                            align-items-center
-                                        "
-                                    >
-                                    
-                                        <!-- <b-form-rating
-                                            stars="3"
-                                            v-model="lbl.value"
-                                            icon-empty="circle"
-                                            icon-full="circle-fill"
-                                            color="green"
-                                            no-border
-                                            show-clear
-                                        /> -->
-                                        
-                                        <b-form-checkbox 
-                                            v-model="lbl.value"
-                                            value="1"
-                                            unchecked-value="0"
-                                        >
-                                        </b-form-checkbox>
-                                    </div> 
+                                        <div>{{ lbl.emotion }}</div>
+                                    </b-form-checkbox>
                                 </div>
                             </b-container>
                             <b-container
@@ -387,13 +353,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .label-row {
     padding: 0.5rem;
     border-style: solid;
     border-width: 1px;
     border-color: #d9d9d9;
     border-radius: 8px;
+}
+
+label.custom-control-label {
+    margin-left: 8px !important;
 }
 
 .form-img-container {
