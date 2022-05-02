@@ -12,7 +12,7 @@
 		<p :style="{ color: color }">
 		Hello! <br><br>
 
-		We are Keith Gabriel Badulis, Matthew Walden Lua, and Byron Ethelbert Nill, ID 118 Students from the 
+		We are Keith, Mats, and Byron, senior students from the 
 		College of Computer Studies of De La Salle University - Manila taking up BS Computer Science with 
 		specializations in Software Technology. 
 

@@ -97,8 +97,8 @@
 			<p>
 			Hello! <br><br>
 
-			We are Keith Gabriel Badulis, Matthew Walden Lua, and Byron Ethelbert Nill, ID 118 Students from the 
-			College of Computer Studies taking up BS Computer Science with specializations in Software Technology. 
+			We are Keith, Mats, and Byron, senior students from the 
+			College of Computer Studies of De La Salle University - Manila taking up BS Computer Science with specializations in Software Technology. 
 			We are currently working on our thesis project entitled "Generating Abstract Art Based on a User-Specified 
 			Emotion Spectrum". Our goal is to build a software that can create abstract paintings through emotions, 
 			and we need your help! <br><br>
@@ -108,20 +108,6 @@
 
 			For any concerns or questions regarding this website or our project, in general, you may reach us through
 			<a href="mailto: depixion.2022@gmail.com">depixion.2022@gmail.com</a>. <br><br>
-			<!-- our email addresses and contact numbers below: <br><br>
-
-			<b>Keith Gabriel Badulis</b><br>
-			keith_gabriel_badulis@dlsu.edu.ph<br>
-			+63 (945) 3455191<br><br>
-
-			<b>Matthew Walden Lua</b><br>
-			matthew_walden_lua@dlsu.edu.ph<br>
-			+63 (917) 5832136<br><br>
-
-			<b>Byron Ethelbert Nill</b><br>
-			byron_ethelbert_nill@dlsu.edu.ph<br>
-			+63 (939) 9363044<br><br> -->
-
 			Thank you very much for your interest in our study!
 			</p>
 		</b-modal>
