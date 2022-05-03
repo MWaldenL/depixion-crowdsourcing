@@ -164,7 +164,7 @@
 </template>
 <script>
 import firebase from "firebase/app";
-import { usersCollection, responsesCollection, evaluationsCollection } from "@/firebase";
+import { usersCollection, evaluationsCollection } from "@/firebase";
 
 export default {
     created() {
@@ -258,12 +258,15 @@ export default {
         },
         startNewSurvey() {
             this.page = 0
+            this.fetchImages().then(() => {
+                this.fetchFormInfo();
+            });
         },
         async fetchImages() {
             // Mark annotated images
             const userDoc = await usersCollection.doc(this.user).get();
             const data = userDoc.data();
-            this.userAnnotated = data.paintingsAnnotated; // FIXME: issue here
+            this.userAnnotated = data.paintingsAnnotated
 
             // Fetch images TODO
             this.imageList = [];
