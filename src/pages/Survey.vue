@@ -178,7 +178,6 @@ export default {
 		// Listen for user state changes
 		firebase.auth().onAuthStateChanged(async user => {
 			if (user) { // Firebase gets uid from localStorage when w/in the same session
-                console.log("Auth state changed: uid is", user.uid)
 				this.user = user.uid
 
 				// try retrieving the user from firebase
