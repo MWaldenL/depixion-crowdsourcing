@@ -301,15 +301,11 @@ export default {
             this.userAnnotated = data.paintingsAnnotated
 
             // Fetch images
-            this.imageList = [{ // TESTING: forcing a broken image
-                img: null, url:'sample-broken-image.jpg'
-            }]
+            this.imageList = []
             const { list, urlPrefix } = await this.getRemoteList() 
 
             // Select images for the user
-            // TODO: Test broken image list locally first before saving to firebase
-            // for (let i=0; i < 10; i++) {
-            for (let i=0; i < 9; i++) { // TODO: TESTING
+            for (let i=0; i < 10; i++) {
                 let rand, img, url, imgPath
                 do { // keep fetching while the selected image has already been annotated and if it's broken
                     rand = Math.floor(Math.random() * list.length); // random index
