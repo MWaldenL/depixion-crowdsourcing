@@ -77,7 +77,8 @@
                         >
                             <div class="form-img-container" v-show="isLoaded">
                                 <b-img
-                                    @load="onLoaded"
+                                    @load="onImageLoaded"
+                                    @error="onImageError"
                                     class="form-img mx-auto"
                                     :src="imgSrc"
                                     fluid-grow
@@ -205,6 +206,7 @@ export default {
             loaded: false,
             userAnnotated: [],
             imageList: [],
+            brokenImages: [],
             emotionLabels: [
                 { emotion: "Joy", value: 0 },
                 { emotion: "Trust", value: 0 },
@@ -216,7 +218,7 @@ export default {
                 { emotion: "Anticipation", value: 0 },
             ],
             points: null,
-            page: null,
+            page: 1,
             dontShowTutorial: false, 
             tutored: false,
             tutImg: "",
@@ -235,9 +237,8 @@ export default {
             return this.page == 11;
         },
         imgSrc() {
-            return this.imageList[this.page - 1]
-                ? this.imageList[this.page - 1].url
-                : "";
+            const curImage = this.imageList[this.page - 1]
+            return curImage ? curImage.url : ""
         },
         isLoaded() {
             return this.imageList[this.page - 1] && this.loaded;
@@ -249,11 +250,14 @@ export default {
         },
     },
     methods: {
-        onSubmit(e) {
-            e.preventDefault();
-        },
-        onLoaded() {
+        onImageLoaded() {
             this.loaded = true;
+        },
+        onImageError(e) {
+            // Get the image for this page and replace it
+            const currentImage = this.imageList[this.page - 1]
+            this.brokenImages.push(currentImage)
+            this.replaceBrokenImage(currentImage)
         },
         startNewSurvey() {
             this.page = 0
@@ -261,14 +265,8 @@ export default {
                 this.fetchFormInfo();
             });
         },
-        async fetchImages() {
-            // Mark annotated images
-            const userDoc = await usersCollection.doc(this.user).get();
-            const data = userDoc.data();
-            this.userAnnotated = data.paintingsAnnotated
-
+        async getRemoteList() {
             // Fetch images TODO
-            this.imageList = [];
             const pool1 = await fetch(
                 "https://res.cloudinary.com/kbadulis/image/list/pool.json"
             );
@@ -278,18 +276,47 @@ export default {
             );
             const sublist2 = await pool2.json();
             const list = sublist1.resources.concat(sublist2.resources);
-            const urlPrefix =
+            const urlPrefix = 
                 "https://res.cloudinary.com/kbadulis/image/upload/v1628054226/images/";
+            return { list, urlPrefix }
+        },
+        async replaceBrokenImage(brokenImage) {
+            const { list, urlPrefix } = await this.getRemoteList()
+            
+            // Find and replace the broken image
+            let rand, img, url, imgPath
+            do {
+                rand = Math.floor(Math.random() * list.length); // random index
+                imgPath = list[rand].public_id.split("/")[1];
+                img = `${imgPath.split("_")[0]}.jpg`
+                url = `${urlPrefix}${imgPath}.jpg`
+            } while (this.userAnnotated.includes(img))
+            const indBroken = this.imageList.indexOf(brokenImage)
+            this.imageList.splice(indBroken, 1, { url, img }) // to actually create an observable object
+        },
+        async fetchImages() {
+            // Mark annotated images
+            const userDoc = await usersCollection.doc(this.user).get();
+            const data = userDoc.data();
+            this.userAnnotated = data.paintingsAnnotated
+
+            // Fetch images
+            this.imageList = [{ // TESTING: forcing a broken image
+                img: null, url:'sample-broken-image.jpg'
+            }]
+            const { list, urlPrefix } = await this.getRemoteList() 
 
             // Select images for the user
-            for (let i=0; i < 10; i++) {
+            // TODO: Test broken image list locally first before saving to firebase
+            // for (let i=0; i < 10; i++) {
+            for (let i=0; i < 9; i++) { // TODO: TESTING
                 let rand, img, url, imgPath
-                do { // keep fetching while the selected image has already been annotated
+                do { // keep fetching while the selected image has already been annotated and if it's broken
                     rand = Math.floor(Math.random() * list.length); // random index
                     imgPath = list[rand].public_id.split("/")[1];
                     img = `${imgPath.split("_")[0]}.jpg`
                     url = `${urlPrefix}${imgPath}.jpg`;
-                } while (this.userAnnotated.includes(img));
+                } while (this.userAnnotated.includes(img) && this.brokenImages.includes(img))
                 this.imageList.push({ url, img });
             }
         },
@@ -321,9 +348,6 @@ export default {
 
                 // Reset ratings form
                 this.emotionLabels.map((_) => (_.value = 0));
-
-                // Scroll to top
-                window.scrollTo(0, 0);
             } else {
                 this.textColor = "text-danger";
             }
