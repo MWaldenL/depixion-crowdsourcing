@@ -31,8 +31,8 @@
                     displayed. For each image, you will be tasked to label them
                     based on the emotions you feel. If you feel that the painting
                     evokes that emotion in you, simply click or tap on the checkbox
-                    next to it. You can remove the label by clicking on the checkbox
-                    again.
+                    next to it. <em>You can select multiple emotions.</em> You can 
+                    remove the label by clicking on the checkbox again.
                 </p>
                 <p class="col-lg-6 mx-auto">
                     <b>Note:</b> You cannot go back to the previous image when
