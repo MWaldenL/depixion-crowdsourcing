@@ -20,6 +20,7 @@
 			<b-button-group class="mx-1">
 				<b-button class="nav-btn" v-b-modal.us-modal variant="link">About the Study</b-button>
 				<b-button class="nav-btn" v-b-modal.dp-modal variant="link">Data Privacy</b-button>
+				<b-button class="nav-btn" v-b-modal.is-modal variant="link">Instructions</b-button>
 			</b-button-group>
 		</b-button-toolbar>
 
@@ -101,13 +102,50 @@
 			Thank you very much for your interest in our study!
 			</p>
 		</b-modal>
+
+		<!-- Data Privacy -->
+		<b-modal id="is-modal" size="xl" centered hide-header-close ok-only ok-variant="success">
+			<template #modal-header>
+			<div>
+				<h2><b>DepiXion</b></h2>
+				<h4>Generating Abstract Art Based on a User-Specified Emotion Spectrum</h4>
+			</div>
+			</template>
+			<h4><sub>Instructions</sub></h4><br>
+			
+			<div class="d-flex align-items-center justify-content-center">
+				<b-img class="tut-img mb-4" fluid :src="tutImg" />
+			</div>
+
+			<p class="col-lg-6 mx-auto text-center">
+				Ten different images of abstract paintings will be
+				displayed. For each image, you will be tasked to label them
+				based on the emotions you feel. If you feel that the painting
+				evokes that emotion in you, simply click or tap on the checkbox
+				next to it. You can remove the label by clicking on the checkbox
+				again.
+			</p>
+
+			<p class="col-lg-6 mx-auto text-center">
+				<b>Note:</b> You cannot go back to the previous image when
+				proceeding to the next.
+			</p>
+		</b-modal>
 	</div>
 </div>
 </template>
 
 <script>
 export default {
-    name: "NavProfile"
+    name: "NavProfile",
+	created() {
+		this.tutImg = require("../../public/sample.png");
+	},
+	data() {
+		return {
+			tutImg: ""
+		}
+	}
 };
 </script>
 
@@ -116,5 +154,9 @@ export default {
 .nav-btn:hover {
 	color: #424242;
 	text-decoration: none;
+}
+
+.tut-img {
+	text-align: center;
 }
 </style>
