@@ -69,10 +69,10 @@
                             How does this painting make you feel?
                         </h3>
                     </div>
-                    <b-row>
+                    <b-row class="justify-content-center">
                         <b-col
-                            class="mb-4 d-flex justify-content-center"
-                            lg="9"
+                            class="m-5 d-flex justify-content-center"
+                            lg="3"
                             sm="12"
                         >
                             <div class="form-img-container" v-show="isLoaded">
@@ -94,7 +94,7 @@
                                 <span class="text-muted">Loading image...</span>
                             </div>
                         </b-col>
-                        <b-col class="my-auto">
+                        <b-col class="my-auto" lg=3>
                             <b-container
                                 :key="lbl.emotion"
                                 v-for="lbl in emotionLabels"
@@ -267,17 +267,27 @@ export default {
         },
         async getRemoteList() {
             // Fetch images TODO
-            const pool1 = await fetch(
+
+            const pool = await fetch(
+                "https://res.cloudinary.com/kbadulis/raw/upload/v1652111820/pool-eval.json"
+            );
+            const poolJSON = await pool.json();
+
+            /* const pool1 = await fetch(
                 "https://res.cloudinary.com/kbadulis/image/list/pool.json"
             );
             const sublist1 = await pool1.json();
             const pool2 = await fetch(
                 "https://res.cloudinary.com/kbadulis/image/list/pool-two.json"
             );
-            const sublist2 = await pool2.json();
-            const list = sublist1.resources.concat(sublist2.resources);
+            const sublist2 = await pool2.json(); */
+
+            const list = poolJSON.resources;
+
+            console.log(list)
+            
             const urlPrefix = 
-                "https://res.cloudinary.com/kbadulis/image/upload/v1628054226/images/";
+                "https://res.cloudinary.com/kbadulis/image/upload/v1652108590/eval-images/";
             return { list, urlPrefix }
         },
         async replaceBrokenImage(brokenImage) {
@@ -287,6 +297,7 @@ export default {
             let rand, img, url, imgPath
             do {
                 rand = Math.floor(Math.random() * list.length); // random index
+                console.log(``)
                 imgPath = list[rand].public_id.split("/")[1];
                 img = `${imgPath.split("_")[0]}.jpg`
                 url = `${urlPrefix}${imgPath}.jpg`
