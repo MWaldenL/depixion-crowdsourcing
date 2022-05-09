@@ -283,8 +283,6 @@ export default {
             const sublist2 = await pool2.json(); */
 
             const list = poolJSON.resources;
-
-            console.log(list)
             
             const urlPrefix = 
                 "https://res.cloudinary.com/kbadulis/image/upload/v1652108590/eval-images/";
@@ -297,7 +295,6 @@ export default {
             let rand, img, url, imgPath
             do {
                 rand = Math.floor(Math.random() * list.length); // random index
-                console.log(``)
                 imgPath = list[rand].public_id.split("/")[1];
                 img = `${imgPath.split("_")[0]}.jpg`
                 url = `${urlPrefix}${imgPath}.jpg`
