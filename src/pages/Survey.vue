@@ -397,6 +397,7 @@ label.custom-control-label {
 
 .form-img-container {
     max-height: 500px;
+    height: 350px;
     width: 100%;
 }
 
