@@ -69,11 +69,11 @@
                             How does this painting make you feel?
                         </h3>
                     </div>
-                    <b-row class="justify-content-center">
+                    <b-row>
                         <b-col
-                            class="m-5 d-flex justify-content-center"
-                            lg="3"
-                            sm="12"
+                            class="mt-0 mb-md-0 mb-4 d-flex justify-content-center"
+                            cols="12"
+                            md="7"
                         >
                             <div class="form-img-container" v-show="isLoaded">
                                 <b-img
@@ -84,7 +84,6 @@
                                     fluid-grow
                                     alt="Abstract Painting"
                                 />
-                                <p>Source: WikiArt</p>
                             </div>
                             <div
                                 class="loading-wrapper mx-auto flex-column"
@@ -94,7 +93,7 @@
                                 <span class="text-muted">Loading image...</span>
                             </div>
                         </b-col>
-                        <b-col class="my-auto" lg=3>
+                        <b-col class="my-auto" >
                             <b-container
                                 :key="lbl.emotion"
                                 v-for="lbl in emotionLabels"
@@ -121,7 +120,7 @@
                                     d-flex
                                     flex-column
                                     align-items-center
-                                    my-4
+                                    mt-4
                                 "
                             >
                                 <b-button
@@ -134,7 +133,7 @@
                                     <span v-else> Finish </span>
                                 </b-button>
                             </b-container>
-                            <p class="text-center" :class="textColor">
+                            <p class="text-center mt-2" :class="textColor">
                                 Please select at least one emotion label
                             </p>
                         </b-col>
