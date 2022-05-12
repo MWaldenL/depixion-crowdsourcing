@@ -24,7 +24,7 @@
 		<a href="mailto: depixion.2022@gmail.com" :style="{ color: color }">depixion.2022@gmail.com</a>. <br><br>
 		Thank you very much for your interest in our study! Please click the button below to proceed with the survey.
 		<br><br>
-		<strong>P.S. This survey contains a completion code for SurveySwap.io</strong>
+		<strong>P.S. This survey contains a completion code for SurveySwap.io and SurveyCircle</strong>
 		</p>
 
 		<!-- <img src="@/../public/login.png" @click="login" id="login" class="d-block mx-auto mt-5 w-50"> -->
