@@ -4,7 +4,8 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist",
+    "target": "depixion-surveyswap",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",

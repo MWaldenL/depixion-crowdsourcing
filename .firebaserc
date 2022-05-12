@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "depixion-crowd"
+  },
+  "targets": {
+    "depixion-crowd": {
+      "hosting": {
+        "depixion-surveyswap": [
+          "depixion"
+        ]
+      }
+    }
   }
 }
