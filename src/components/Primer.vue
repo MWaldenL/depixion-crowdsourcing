@@ -1,9 +1,6 @@
 <template>
 <div class="row gx-0">
-	<!-- <div class="col-xl-8 px-0" id="img-wrapper"> -->
-		<img :src="background" id="bg-image" class="col-xl-8 px-0">
-		<!-- <p id="img-text">Source: WikiArt</p> -->
-	<!-- </div> -->
+	<img :src="background" id="bg-image" class="col-xl-8 px-0">
 	<div id="primer" class="ml-auto col-xl p-5" :style="{ backgroundColor: backgroundColor }">
 		<h2 :style="{ color: color }"><b>DepiXion</b></h2>
 		<h4 :style="{ color: color }">Generating Abstract Art Based on a User-Specified Emotion Spectrum</h4>
@@ -25,21 +22,9 @@
 
 		For any concerns or questions regarding this website or our project, in general, you may reach us through 
 		<a href="mailto: depixion.2022@gmail.com" :style="{ color: color }">depixion.2022@gmail.com</a>. <br><br>
-		<!-- our email addresses and contact numbers below: <br><br>
-
-		<b>Keith Gabriel Badulis</b><br>
-		keith_gabriel_badulis@dlsu.edu.ph<br>
-		+63 (945) 3455191<br><br>
-
-		<b>Matthew Walden Lua</b><br>
-		matthew_walden_lua@dlsu.edu.ph<br>
-		+63 (917) 5832136<br><br>
-
-		<b>Byron Ethelbert Nill</b><br>
-		byron_ethelbert_nill@dlsu.edu.ph<br>
-		+63 (939) 9363044<br><br> -->
-
 		Thank you very much for your interest in our study! Please click the button below to proceed with the survey.
+		<br><br>
+		<strong>P.S. This survey contains a completion code for SurveySwap.io</strong>
 		</p>
 
 		<!-- <img src="@/../public/login.png" @click="login" id="login" class="d-block mx-auto mt-5 w-50"> -->

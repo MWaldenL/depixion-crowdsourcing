@@ -16,6 +16,11 @@
                     you can click the button below and label a new set of
                     paintings.
                 </p>
+                <p class="col-lg-8 mx-auto">
+                    The following code gives you credits that can be used to get free research participants at SurveySwap.io. 
+                    Go to: https://surveyswap.io/sr/VY51-HEFL-KTIP 
+                    Or, alternatively, enter the code manually: VY51-HEFL-KTIP
+                </p>
                 <b-button class="mt-2" @click="startNewSurvey" variant="success">
                     Label more paintings
                 </b-button>
