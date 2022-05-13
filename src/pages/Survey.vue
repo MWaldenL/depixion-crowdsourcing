@@ -5,8 +5,7 @@
 	</div>
     <div class="px-md-4 pt-4 main-div" v-else>
 		<!-- Completed View -->
-        <!-- <div v-if="completed" class="col-lg-10 mx-auto"> -->
-        <div class="col-lg-10 mx-auto">
+        <div v-if="completed" class="col-lg-10 mx-auto">
             <b-card class="form-card p-4 text-center">
                 <h3 class="display-5 fw-bold mb-4">Thank you!</h3>
                 <p class="col-lg-8 mx-auto">
@@ -38,7 +37,7 @@
             </b-card>
         </div>
 		<!-- Tutorial View -->
-        <!-- <div v-else-if="!tutored" class="col-lg-10 mx-auto">
+        <div v-else-if="!tutored" class="col-lg-10 mx-auto">
             <b-card class="p-2 d-flex flex-column align-items-center text-center">
                 <h3 class="fw-bold mb-4">Emotion Labeling Reminders</h3>
                 <b-img class="tut-img mb-4" fluid :src="tutImg" />
@@ -69,9 +68,9 @@
                     Begin answering
                 </b-button>
             </b-card>
-        </div> -->
+        </div>
 		<!-- Survey Form -->
-        <!-- <div v-else class="col-lg-10 mx-auto">
+        <div v-else class="col-lg-10 mx-auto">
             <b-card class="p-lg-4">
                 <b-container>
                     <div
@@ -175,7 +174,7 @@
                     </div>
                 </div>
             </b-card>
-        </div> -->
+        </div>
     </div>
 </template>
 <script>
