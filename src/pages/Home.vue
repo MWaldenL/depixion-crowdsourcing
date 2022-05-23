@@ -1,12 +1,18 @@
 <template>
     <div id="home" class="d-flex main-div">
         <Primer @enter="enterSurvey" v-show="!user" />
+        <VueJsonToCsv :json-data="docs">
+            <button>
+            <b>Save</b>
+            </button>
+        </VueJsonToCsv>
     </div>
 </template>
 
 <script>
 import { auth, responsesCollection, evaluationsCollection } from "@/firebase";
 import Primer from "@/components/Primer";
+import VueJsonToCsv from 'vue-json-to-csv'
 
 export default {
     name: "Home",
